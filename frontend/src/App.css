@@ -155,6 +155,11 @@ body {
   flex-direction: column; /* Stack cards vertically */
   gap: 10px; /* Space between cards */
   /* When using react-beautiful-dnd, this is also your Droppable area */
+
+  /* *** Add a minimum height here *** */
+  min-height: 150px; /* Adjust this value as needed */
+  /* You might also add a subtle background color here when it's empty for visual clarity */
+  /* background-color: #f0f0f0; */ /* Optional: Light background for empty state */
 }
 
 /* Remove the temporary placeholder style (if you haven't already) */
