@@ -2,7 +2,7 @@
 import React from 'react';
 import DealCard from './DealCard';
 // *** Import Droppable ***
-import { Droppable } from 'react-beautiful-dnd';
+import { Droppable } from '@hello-pangea/dnd';
 // import './PipelineColumn.css';
 
 function PipelineColumn({ column }) {

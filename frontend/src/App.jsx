@@ -5,7 +5,7 @@ import './App.css'; // Import the App.css file for styling
 // Import the components used in App
 import Header from './components/header';
 import SalesPipelineBoard from './components/SalesPipelineBoard';
-import { DragDropContext } from 'react-beautiful-dnd'; // Import DragDropContext
+import { DragDropContext } from '@hello-pangea/dnd'; // Import DragDropContext
 import AddDealModal from './components/AddDealModal'; // Import the AddDealModal component
 
 // *** MOCK DATA - This holds the initial state of your pipeline ***

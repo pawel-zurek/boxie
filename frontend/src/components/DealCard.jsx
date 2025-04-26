@@ -3,7 +3,7 @@ import React from 'react';
 import Tag from './Tag';
 import AvatarGroup from './AvatarGroup';
 // *** Import Draggable ***
-import { Draggable } from 'react-beautiful-dnd';
+import { Draggable } from '@hello-pangea/dnd';
 // import './DealCard.css'; // Your CSS file for deal cards
 
 // DealCard component now receives 'index' prop from the mapping in PipelineColumn
