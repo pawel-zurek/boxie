@@ -8,7 +8,7 @@ class Job(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String, nullable=False)
-    person_id = Column(Integer, ForeignKey("people.id"))
+    person_id = Column(Integer, ForeignKey("persons.id"))
     address = Column(String, nullable=True)
     city = Column(String, nullable=True)
     value = Column(Integer, nullable=True)
