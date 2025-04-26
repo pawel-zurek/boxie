@@ -18,6 +18,7 @@ class JobCreate(JobBase):
 class JobOut(JobBase):
     id: int
     person_id: int
+    owner_id: int
     activities: List[ActivityOut] = []
     notes: List[NoteOut] = []
 

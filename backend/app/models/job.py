@@ -14,6 +14,7 @@ class Job(Base):
     value = Column(Integer, nullable=True)
     close_date = Column(DateTime, nullable=True)
     status = Column(String, nullable=True)
+    owner_id = Column(Integer, ForeignKey("users.id"))
 
     person = relationship("Person", back_populates="jobs")
     activities = relationship("Activity", back_populates="job", cascade="all, delete")
