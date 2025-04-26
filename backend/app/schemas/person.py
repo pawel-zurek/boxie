@@ -15,3 +15,11 @@ class PersonOut(PersonBase):
 
     class Config:
         orm_mode = True
+
+class PersonUpdate(BaseModel):
+    name: Optional[str] = None
+    role: Optional[str] = None
+    nip: Optional[int] = None
+
+    class Config:
+        orm_mode = True
