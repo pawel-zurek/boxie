@@ -14,4 +14,4 @@ dist/
 .env
 
 #pycharm
-.idea
+.idea/
