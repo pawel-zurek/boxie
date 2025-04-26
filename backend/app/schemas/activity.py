@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+from typing import Optional
 
 class ActivityBase(BaseModel):
     desc: str
@@ -10,6 +11,13 @@ class ActivityCreate(ActivityBase):
 class ActivityOut(ActivityBase):
     id: int
     job_id: int
+
+    class Config:
+        orm_mode = True
+
+class ActivityUpdate(BaseModel):
+    status: Optional[bool] = None
+    desc: Optional[str] = None
 
     class Config:
         orm_mode = True

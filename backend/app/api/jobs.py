@@ -1,8 +1,8 @@
 from typing import List
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from app.db.session import SessionLocal
-from app.schemas.job import JobCreate, JobOut
+from app.schemas.job import JobCreate, JobOut, JobUpdate
 from app.crud import job
 from app.core.security import get_current_user
 from fastapi import Depends
@@ -31,3 +31,27 @@ def get_single_job(job_id: int, db: Session = Depends(get_db), current_user: str
     if not db_job:
         raise HTTPException(status_code=404, detail="Job not found")
     return db_job
+
+@router.patch("/{job_id}", response_model=JobOut)
+def update_job(
+    job_id: int,
+    job_in: JobUpdate,
+    db: Session = Depends(get_db),
+    current_user: str = Depends(get_current_user)
+):
+    db_job = job.get_job(db, job_id, owner_id=int(current_user))
+    if not db_job:
+        raise HTTPException(status_code=404, detail="Job not found")
+    return job.update_job(db, db_job, job_in)
+
+@router.delete("/{job_id}", status_code=status.HTTP_204_NO_CONTENT)
+def delete_job(
+    job_id: int,
+    db: Session = Depends(get_db),
+    current_user: str = Depends(get_current_user)
+):
+    db_job = job.get_job(db, job_id, owner_id=int(current_user))
+    if not db_job:
+        raise HTTPException(status_code=404, detail="Job not found")
+    job.delete_job(db, db_job)
+    return Response(status_code=status.HTTP_204_NO_CONTENT)
