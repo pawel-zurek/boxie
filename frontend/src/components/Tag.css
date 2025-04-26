@@ -1,0 +1,45 @@
+/* src/components/Tag.css */
+.tag {
+    font-family: 'Roboto', sans-serif;
+    font-size: 12px;
+    line-height: 14px; /* identical to box height from mockup */
+    font-weight: 400;
+    padding: 4px 8px; /* Adjust padding to match visual */
+    border-radius: 4px; /* From mockup */
+    /* Use display: inline-block or flex if needed for alignment */
+    display: inline-flex;
+    align-items: center;
+  }
+  
+  /* Specific styles based on mockup tag colors */
+  .tag-Design, .tag-Development { /* Example: Blueish tags */
+    background-color: #DBEAFE; /* from mockup CSS */
+    color: #2563EB; /* from mockup CSS */
+  }
+  
+   .tag-Marketing { /* Example: Green tag */
+    background-color: #D1FAE5; /* from mockup CSS */
+    color: #059669; /* from mockup CSS */
+  }
+  
+  .tag-Content { /* Example: Yellowish tag */
+    background-color: #FEF3C7; /* from mockup CSS */
+    color: #D97706; /* from mockup CSS */
+  }
+  
+   .tag-Branding { /* Example: Pinkish tag */
+    background-color: #FCE7F3; /* from mockup CSS */
+    color: #DB2777; /* from mockup CSS */
+   }
+  
+  .tag-Mobile { /* Example: Orange tag */
+    background-color: #FFEDD5; /* from mockup CSS */
+    color: #EA580C; /* from mockup CSS */
+  }
+  
+   .tag-E-commerce { /* Example: Bluish-purple tag */
+      background-color: #E0E7FF; /* from mockup CSS */
+      color: #4F46E5; /* from mockup CSS */
+   }
+  
+  /* Add more tag-color styles as needed based on all tags in your data */

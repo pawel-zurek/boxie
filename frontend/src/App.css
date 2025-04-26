@@ -1,42 +1,249 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+/* src/App.css */
+
+/* Basic body styles */
+body {
+  margin: 0;
+  font-family: 'Roboto', sans-serif; /* Ensure Roboto or similar is available */
+  background-color: #F9FAFB; /* Background color from the mockup */
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+/* Styles for the main App div */
+.App {
+  box-sizing: border-box;
+  /*
+    Remove or increase max-width to allow the content to fill the screen.
+    Removing it makes the container take up the full width of the body.
+  */
+  /* max-width: 1440px; */ /* <-- COMMENTED OUT or REMOVED */
+  margin: 0 auto;     /* Keep this if you keep max-width to center,
+                         or remove if you want it left-aligned and full width */
+
+  padding: 0px; /* From mockup */
+  background: #FFFFFF; /* From mockup */
+  border: 2px solid #CED4DA; /* From mockup */
+  border-radius: 8px; /* From mockup */
+
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Make sure the container takes at least full viewport height */
+  overflow: hidden; /* Hide any overflow from child elements initially */
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* -------------------- Header Styles -------------------- */
+
+/* Styles for the Header container */
+.app-header {
+  padding: 24px; /* Based on mockup spacing */
+  border-bottom: 1px solid #ccc; /* A common separator */
+  display: flex; /* Use flexbox to arrange items within the header */
+  justify-content: space-between; /* Space out title/button group and search/user group */
+  align-items: center; /* Vertically center items */
+  width: 100%; /* Take full width of parent (.App) */
+  height: auto; /* Height determined by content */
+  box-sizing: border-box; /* Include padding in width/height */
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.header-content {
+  display: flex;
+  align-items: center;
+  gap: 20px; /* Space between title and Add Deal button */
 }
 
-.card {
-  padding: 2em;
+.app-header h1 {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 24px;
+  color: #1F2937;
+  margin: 0; /* Remove default margin */
 }
 
-.read-the-docs {
-  color: #888;
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 15px; /* Space between search and user avatar */
+}
+
+/* Basic Add Deal Button Styles (translate from mockup CSS) */
+.add-deal-button { /* Apply this class to your actual button */
+  background: #2563EB;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px; /* Adjust padding to match the size/text */
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex; /* For icon and text */
+  align-items: center;
+  gap: 5px; /* Space between plus icon and text */
+}
+
+/* Search Input Basic Styles */
+.search-input { /* Apply this class to your input */
+  box-sizing: border-box;
+  background: #FFFFFF;
+  border: 1px solid #E5E7EB;
+  border-radius: 8px;
+  padding: 10px 12px; /* Adjust padding */
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  /* You might want to set a width here, e.g., width: 256px; */
+}
+
+/* -------------------- Board and Column Styles -------------------- */
+
+/* Styles for the Sales Pipeline Board container (the area holding columns) */
+.sales-pipeline-board {
+  display: flex; /* Arrange columns side-by-side */
+  padding: 24px; /* Based on mockup spacing around the board */
+  gap: 20px; /* Space between columns */
+  overflow-x: auto; /* Add horizontal scrolling if columns exceed container width */
+  flex-grow: 1; /* Allow the board to take up available vertical space */
+}
+
+/* Styles for the Pipeline Column container */
+.pipeline-column {
+  min-width: 280px; /* Give columns a minimum width */
+  flex-shrink: 0; /* Prevent columns from shrinking below min-width */
+  /* flex-basis: 0; Allows flex-grow to distribute space */
+  /* flex-grow: 1; Optional: Allow columns to grow and fill space if possible */
+  background-color: #F3F4F6; /* Background from mockup */
+  border-radius: 8px; /* Border radius from mockup */
+  padding: 15px; /* Padding inside the column */
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05); /* Add a subtle shadow */
+  display: flex; /* Use flexbox for column content (header and cards) */
+  flex-direction: column; /* Stack header and cards vertically */
+  gap: 15px; /* Space between header and card container */
+  height: fit-content; /* Column height fits its content */
+  max-height: calc(100vh - 150px); /* Example: limit max height for scrolling within column */
+  overflow-y: auto; /* Add vertical scrolling within the column if cards exceed height */
+}
+
+/* Styles for the column header (Title and Count) */
+.column-header {
+  display: flex; /* Arrange title and count side-by-side */
+  align-items: center; /* Vertically align */
+  justify-content: space-between; /* Push count to the right */
+  gap: 10px; /* Space between title and count */
+  font-size: 16px; /* Match mockup */
+  font-weight: 600; /* Match mockup */
+  color: #374151; /* Match mockup */
+  padding-bottom: 5px; /* Add some space below header before cards */
+  /* border-bottom: 1px solid #eee; Optional separator */
+}
+
+.column-header h3 {
+  margin: 0; /* Remove default h3 margin */
+  font-size: 16px; /* Ensure h3 doesn't override */
+  font-weight: 600;
+}
+
+.deal-count {
+  background-color: #E5E7EB; /* Background color from mockup */
+  color: #4B5563; /* Text color from mockup */
+  font-size: 14px; /* Match mockup */
+  font-weight: 400;
+  padding: 2px 8px; /* Adjust padding */
+  border-radius: 9999px; /* Make it pill-shaped */
+  flex-shrink: 0; /* Prevent count from shrinking */
+}
+
+/* Styles for the container holding deal cards within a column */
+.deal-cards-container {
+  display: flex;
+  flex-direction: column; /* Stack cards vertically */
+  gap: 10px; /* Space between cards */
+  /* When using react-beautiful-dnd, this is also your Droppable area */
+}
+
+/* Remove the temporary placeholder style (if you haven't already) */
+/* .pipeline-column-placeholder {
+    ... styles ...
+} */
+
+/* -------------------- Deal Card Styles -------------------- */
+
+/* Styles for the individual Deal Card container */
+.deal-card {
+  background-color: #FFFFFF; /* From mockup */
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05); /* From mockup */
+  border-radius: 8px; /* From mockup */
+  padding: 16px; /* Adjust padding based on mockup spacing */
+  display: flex; /* Use flexbox for the internal layout of the card content */
+  flex-direction: column; /* Stack header, tags, footer vertically */
+  gap: 10px; /* Space between sections */
+  cursor: grab; /* Indicate it's draggable (will be handled by dnd library later) */
+  transition: background-color 0.2s ease; /* Smooth transition for dragging styles */
+  user-select: none; /* Prevent text selection during drag */
+  min-height: 80px; /* Minimum height for cards */
+}
+
+/* Styles for the deal header (title and value) */
+.deal-header {
+    display: flex; /* Arrange title and value side-by-side */
+    justify-content: space-between; /* Push value to the right */
+    align-items: center; /* Vertically align */
+    gap: 10px; /* Space between title and value */
+}
+
+.deal-title {
+    font-size: 16px; /* From mockup */
+    font-weight: 500; /* From mockup */
+    color: #1F2937; /* From mockup */
+    margin: 0; /* Remove default margin */
+    line-height: 1.2; /* Adjust line height */
+    word-break: break-word; /* Break long words if necessary */
+}
+
+.deal-value {
+    font-size: 16px; /* From mockup */
+    font-weight: 500; /* From mockup */
+    color: #059669; /* Green color from mockup */
+    flex-shrink: 0; /* Prevent value from shrinking */
+}
+
+/* Styles for the tags container (uses flexbox internally for tags) */
+.deal-tags {
+    display: flex;
+    flex-wrap: wrap; /* Allow tags to wrap to the next line */
+    gap: 5px; /* Space between tags */
+    font-size: 12px; /* Base font size for tags */
+}
+
+/* Styles for the deal footer (assignees and due date) */
+.deal-footer {
+    display: flex; /* Arrange assignees and due date side-by-side */
+    justify-content: space-between; /* Push due date to the right */
+    align-items: center; /* Vertically align */
+    gap: 10px; /* Space between sections */
+    margin-top: 8px; /* Add some space above the footer */
+}
+
+.deal-assignees {
+    /* This div wraps the AvatarGroup component */
+    display: flex; /* Use flexbox for alignment if needed */
+    align-items: center;
+    /* Gap/overlap handled by AvatarGroup's internal margin */
+}
+
+.deal-due-date {
+    font-size: 14px; /* From mockup */
+    font-weight: 400; /* From mockup */
+    color: #6B7280; /* From mockup */
+    flex-shrink: 0; /* Prevent date from shrinking */
+    line-height: 1.2; /* Adjust line height */
+}
+
+/* Optional: Add styles for dragging state provided by react-beautiful-dnd */
+.deal-card.is-dragging {
+  /* Example: Slightly rotate and add a stronger shadow */
+  transform: rotate(2deg);
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+  background-color: #e0e0e0; /* Change background while dragging */
+}
+
+/* Optional: Add styles for the droppable area when dragging over */
+.deal-cards-container.is-dragging-over {
+    background-color: #f0f0f0; /* Light background when dragging over */
 }

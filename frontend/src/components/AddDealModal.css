@@ -1,0 +1,169 @@
+/* src/components/AddDealModal.css */
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    z-index: 1000; /* Ensure it's on top of other content */
+    padding: 20px; /* Add some padding for smaller screens */
+    overflow-y: auto; /* Add scrolling if modal content exceeds viewport height */
+  }
+  
+  .modal-content {
+    background-color: #fff;
+    padding: 30px; /* Adjust padding based on mockup */
+    border-radius: 8px; /* Match mockup */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow */
+    width: 100%; /* Take full width on small screens */
+    max-width: 600px; /* Set a maximum width for larger screens */
+    max-height: 90vh; /* Limit height to prevent overflow */
+    display: flex;
+    flex-direction: column;
+    position: relative; /* For absolute positioning of close button if used */
+  }
+  
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #eee; /* Separator line */
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+  }
+  
+  .modal-header h2 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 600;
+    color: #1F2937;
+  }
+  
+  /* Basic form layout */
+  .modal-body {
+     flex-grow: 1; /* Allow body to take up space */
+     overflow-y: auto; /* Add scrolling for the form content if it gets too long */
+     padding-right: 10px; /* Add some padding if scrollbar appears */
+     margin-right: -10px; /* Counteract padding for scrollbar */
+  }
+  
+  .form-row {
+    display: flex;
+    gap: 20px; /* Space between fields in a row */
+    margin-bottom: 15px; /* Space between rows */
+  }
+  
+  .form-field {
+    display: flex;
+    flex-direction: column;
+    flex: 1; /* Allow fields to grow and shrink */
+  }
+  
+  .form-field.full-width {
+      flex-basis: 100%; /* Make a field take full width */
+  }
+  
+  
+  .form-field label {
+    font-size: 14px;
+    font-weight: 500;
+    color: #374151;
+    margin-bottom: 5px;
+  }
+  
+  .form-field input[type="text"],
+  .form-field input[type="email"],
+  .form-field textarea {
+    padding: 10px;
+    border: 1px solid #E5E7EB;
+    border-radius: 4px;
+    font-size: 16px;
+    font-family: 'Roboto', sans-serif;
+    width: 100%; /* Make inputs take full width of their container */
+    box-sizing: border-box; /* Include padding/border in width */
+  }
+  
+   .form-field textarea {
+      resize: vertical; /* Allow vertical resizing */
+   }
+  
+  
+  .form-section {
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px solid #eee;
+  }
+  
+   .attachment-area {
+       border: 2px dashed #D1D5DB;
+       border-radius: 8px;
+       padding: 20px;
+       text-align: center;
+       cursor: pointer;
+       margin-top: 10px;
+   }
+  
+   .attachment-area p {
+       margin: 5px 0;
+       font-size: 14px;
+       color: #6B7280;
+   }
+  
+  
+  .modal-footer {
+    display: flex;
+    justify-content: flex-end; /* Align buttons to the right */
+    gap: 10px; /* Space between buttons */
+    border-top: 1px solid #eee; /* Separator line */
+    padding-top: 15px;
+    margin-top: 20px;
+  }
+  
+  .save-lead-button {
+    background-color: #2563EB; /* Blue color from mockup */
+    color: #FFFFFF;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .cancel-button {
+     background-color: #D1D5DB; /* Light grey */
+     color: #374151;
+     border: none;
+     border-radius: 8px;
+     padding: 10px 20px;
+     font-size: 16px;
+     cursor: pointer;
+  }
+  
+  
+  /* Basic responsiveness for the modal */
+  @media (max-width: 600px) {
+      .modal-content {
+          padding: 20px; /* Reduce padding on smaller screens */
+      }
+      .form-row {
+          flex-direction: column; /* Stack fields vertically in rows on small screens */
+          gap: 10px; /* Adjust gap */
+      }
+      .form-field {
+          flex: none; /* Remove flex grow */
+          width: 100%; /* Take full width */
+      }
+      .modal-footer {
+          flex-direction: column-reverse; /* Stack buttons, cancel first */
+          gap: 10px;
+      }
+       .save-lead-button, .cancel-button {
+          width: 100%; /* Full width buttons */
+          text-align: center;
+       }
+  }
