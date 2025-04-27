@@ -17,7 +17,8 @@ body {
 .login-container {
     text-align: center; /* Center text elements within the container */
     width: 100%;
-    min-width: 400px; /* Limit the maximum width of the login card area */
+    /* Adjust this value to control the maximum width of the login/register card */
+    min-width: 400px; /* Example: This is the value we adjusted it to */
 }
 
 /* Header styles (Title and Subtitle) */
@@ -89,37 +90,62 @@ body {
     /* You might add padding here if needed, but the form-group margin often suffices */
 }
 
-/* Form group (label + input) */
+/* Base styles for form groups (label + input/select) */
 .form-group {
-    margin-bottom: 20px; /* Space between each label/input pair */
+    margin-bottom: 20px; /* Space between each label/input/select pair */
     text-align: left; /* Align text (labels) to the left */
 }
 
 .form-group label {
     display: block; /* Make labels take up their own line */
-    margin-bottom: 8px; /* Space between label and input */
+    margin-bottom: 8px; /* Space between label and input/select */
     font-weight: bold;
     color: #555; /* Slightly darker color for labels */
     font-size: 14px;
 }
 
-/* Input field styles */
+/* Styles common to both input fields and select dropdowns using the .form-input class */
 .form-input {
-    width: 100%; /* Make input take full width of its container */
+    width: 100%; /* Make element take full width of its container */
     padding: 10px 12px;
     border: 1px solid #ccc; /* Light gray border */
-    border-radius: 4px; /* Slightly rounded corners for inputs */
+    border-radius: 4px; /* Slightly rounded corners */
     font-size: 16px;
     box-sizing: border-box; /* Include padding and border in the element's total width */
+    background-color: #fff; /* Ensure white background */
+    /* Appearance reset is moved to select.form-input */
+    /* Background image for arrow is moved to select.form-input */
 }
 
+/* Focus styles for both input fields and select dropdowns */
 .form-input:focus {
     outline: none; /* Remove default outline */
     border-color: #007bff; /* Blue border on focus */
     box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); /* Subtle blue glow on focus */
 }
 
-/* Login button styles */
+
+/* Styles specifically for select dropdowns using the .form-input class */
+select.form-input {
+    /* Reset default browser appearance */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    /* Add the custom arrow background */
+    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23000000%22%20d%3D%22M287%2C114.7L159.3%2C242.4c-4.5%2C4.5-12%2C4.5-16.5%2C0L5.4%2C114.7c-4.5-4.5-4.5-12%2C0-16.5l14.1-14.1c4.5-4.5%2C12-4.5%2C16.5%2C0L145.9%2C184.3c2.2%2C2.2%2C5.1%2C3.4%2C8.2%2C3.4c3%2C0%2C5.9-1.2%2C8.2-3.4L256.4%2C84.1c4.5-4.5%2C12-4.5%2C16.5%2C0l14.1%2C14.1C291.5%2C102.7%2C291.5%2C110.2%2C287%2C114.7z%22%2F%3E%3C%2Fsvg%3E');
+    background-repeat: no-repeat;
+    background-position: right 12px top 50%;
+    background-size: 12px auto;
+    padding-right: 30px; /* Add padding on the right to make space for the arrow */
+}
+
+/* Style for the custom arrow in IE (targets select specifically) */
+select.form-input::-ms-expand {
+    display: none;
+}
+
+
+/* Button styles (for both Login and Register buttons using this class) */
 .login-button {
     width: 100%; /* Make button take full width */
     padding: 12px;
@@ -145,12 +171,17 @@ body {
     text-align: center; /* Center the error text */
 }
 
-/* Placeholder styling for the Register form area */
-.register-placeholder {
-    text-align: center;
-    padding: 20px;
-    border: 1px dashed #ccc; /* Dashed border */
-    border-radius: 4px;
-    color: #888; /* Gray text */
-    margin-top: 20px; /* Space above the placeholder */
+/* Success message style */
+.success-message {
+    color: green; /* Green text for success messages */
+    font-size: 14px;
+    margin-bottom: 15px; /* Space below the message */
+    text-align: center; /* Center the success text */
 }
+
+
+/* Optional: Styles specific to the register form or its container if needed */
+/*
+.register-form-container {}
+.register-form {}
+*/
