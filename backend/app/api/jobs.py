@@ -18,8 +18,8 @@ def get_db():
         db.close()
 
 @router.post("/", response_model=JobOut)
-def create_job(job_in: JobCreate, db: Session = Depends(get_db)):
-    return job.create_job(db, job_in, owner_id=1)
+def create_job(job_in: JobCreate, db: Session = Depends(get_db), current_user: str = Depends(get_current_user)):
+    return job.create_job(db, job_in, owner_id=int(current_user))
 
 @router.get("/", response_model=List[JobOut])
 def list_jobs(db: Session = Depends(get_db), current_user: str = Depends(get_current_user)):

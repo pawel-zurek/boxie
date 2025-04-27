@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import './AddDealModal.css';
 
 const API_URL = import.meta.env.VITE_API_URL;
-const TEST_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZXhwIjoxNzQ1NzY4NDQ5fQ.14qMolZ_DnbWFfk0lXL9uuCtof4LO12fto6xIvcYXPU";
 
 function AddDealModal({ onClose }) {
   const [formData, setFormData] = useState({
@@ -48,11 +47,12 @@ function AddDealModal({ onClose }) {
     };
 
     try {
+      const token = localStorage.getItem("token");
       const response = await fetch(`${API_URL}/api/jobs/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${TEST_TOKEN}`,
+          'Authorization': `Bearer ${token}`,
         },
         body: JSON.stringify(backendData),
       });
