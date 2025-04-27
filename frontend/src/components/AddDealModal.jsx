@@ -1,186 +1,201 @@
-import React, { useState } from 'react'; // Import useState for component state
-import './AddDealModal.css'; // Import the CSS file for modal styling
+import React, { useState } from 'react';
+import './AddDealModal.css';
 
-// The AddDealModal component receives props from App.jsx
-// onClose: A function to call when the modal should close
-// onSave: A function to call when the "Save Lead" button is clicked (will pass form data)
-function AddDealModal({ onClose, onSave }) {
-  // State to hold the form data as the user types
+const API_URL = import.meta.env.VITE_API_URL;
+const TEST_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZXhwIjoxNzQ1NzY4NDQ5fQ.14qMolZ_DnbWFfk0lXL9uuCtof4LO12fto6xIvcYXPU";
+
+function AddDealModal({ onClose }) {
   const [formData, setFormData] = useState({
-    fullName: '',
-    phoneNumber: '',
-    emailAddress: '',
+    name: '',
     address: '',
-    typeOfJob: '',
-    notes: '',
+    city: '',
+    value: '',
+    status: '',
+    close_day: '1',
+    close_month: '1',
+    close_year: '2025',
   });
 
-  // Handler function to update the formData state whenever an input field changes
   const handleInputChange = (e) => {
-    const { name, value } = e.target; // Get the input's name and current value
+    const { name, value } = e.target;
     setFormData((prevFormData) => ({
-      ...prevFormData, // Copy the previous form data
-      [name]: value, // Update the value for the specific input field by its name
+      ...prevFormData,
+      [name]: value,
     }));
   };
 
-  // Handler function called when the "Save Lead" button is clicked
-  const handleSaveLead = () => {
-    // Basic validation for required fields
-    if (!formData.fullName || !formData.emailAddress) {
-      alert('Full Name and Email Address are required.');
+  const handleSaveLead = async () => {
+    if (!formData.name) {
+      alert('Job Name is required.');
       return;
     }
 
-    // *** Map form data to backend specification ***
-  const backendData = {
-    name: formData.fullName, // Map fullName to name
-    address: formData.address, // Map address to address
-    // *** Handle fields missing from the current form mockup: ***
-    city: 'Unknown', // Placeholder: Add a city field to the form or derive/default this
-    value: 0,        // Placeholder: Add a value field to the form or default this
-    close_date: new Date().toISOString(), // Placeholder: Add a date picker or default this
-    status: 'leads', // Default status to 'leads' as it's a new lead
-    person_id: 0,    // Placeholder: Add a way to select/assign a person, or default this
-    // Note: Phone Number, Email, Type of Job, Notes, Attachments from the form
-    // are NOT included in the provided backend spec. You might need to add these
-    // to the backend spec or handle them differently if they are needed.
-    // For now, only include what the backend spec requires.
+    const closeDate = new Date(
+      parseInt(formData.close_year),
+      parseInt(formData.close_month) - 1,
+      parseInt(formData.close_day)
+    ).toISOString();
+
+    const backendData = {
+      name: formData.name,
+      address: formData.address,
+      city: formData.city,
+      value: parseInt(formData.value) || 0,
+      close_date: closeDate,
+      status: formData.status || 'Lead',
+      person_id: 1,
+      owner_id: 1,
+    };
+
+    try {
+      const response = await fetch(`${API_URL}/api/jobs/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${TEST_TOKEN}`,
+        },
+        body: JSON.stringify(backendData),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const result = await response.json();
+      console.log('Job successfully created:', result);
+      onClose();
+    } catch (error) {
+      console.error('Error saving the job:', error);
+      alert('There was an error saving the job. Please try again.');
+    }
   };
-  // *** End mapping ***
 
-  console.log("Data formatted for backend:", backendData);
-
-  // Call the onSave prop passed from App.jsx and pass the backendData
-  if (onSave) { // Check if onSave prop was provided
-    onSave(backendData);
-  }
-
-
-    // Close the modal
-    onClose();
-  };
-
-  // Handler to close the modal when clicking the overlay
   const handleOverlayClick = (e) => {
-    // Only close if the click was directly on the overlay, not the modal content
     if (e.target.classList.contains('modal-overlay')) {
       onClose();
     }
   };
 
   return (
-    // This is the main modal overlay background div
     <div className="modal-overlay" onClick={handleOverlayClick}>
-      {/* This is the modal content box that appears in the center */}
       <div className="modal-content">
-        {/* Modal Header */}
         <div className="modal-header">
-          <h2>New Lead Information</h2>
+          <h2>New Job Information</h2>
         </div>
 
-        {/* Modal Body: Contains the form fields */}
         <div className="modal-body">
-          {/* Form Row 1: Full Name and Address */}
+          {/* Job Name */}
           <div className="form-row">
-            <div className="form-field">
-              <label htmlFor="fullName">Full Name</label>
+            <div className="form-field full-width">
+              <label htmlFor="name">Job Name</label>
               <input
                 type="text"
-                id="fullName"
-                name="fullName"
-                placeholder="Enter full name"
-                value={formData.fullName}
+                id="name"
+                name="name"
+                placeholder="Enter job name"
+                value={formData.name}
                 onChange={handleInputChange}
               />
             </div>
+          </div>
+
+          {/* Address and City */}
+          <div className="form-row">
             <div className="form-field">
               <label htmlFor="address">Address</label>
               <input
                 type="text"
                 id="address"
                 name="address"
-                placeholder="Enter complete address"
+                placeholder="Enter address"
                 value={formData.address}
                 onChange={handleInputChange}
               />
             </div>
-          </div>
 
-          {/* Form Row 2: Phone Number and Type of Job */}
-          <div className="form-row">
             <div className="form-field">
-              <label htmlFor="phoneNumber">Phone Number</label>
+              <label htmlFor="city">City</label>
               <input
                 type="text"
-                id="phoneNumber"
-                name="phoneNumber"
-                placeholder="Enter phone number"
-                value={formData.phoneNumber}
+                id="city"
+                name="city"
+                placeholder="Enter city"
+                value={formData.city}
                 onChange={handleInputChange}
               />
             </div>
+          </div>
+
+          {/* Value and Status */}
+          <div className="form-row">
             <div className="form-field">
-              <label htmlFor="typeOfJob">Type of Job</label>
+              <label htmlFor="value">Value (€)</label>
               <input
-                type="text"
-                id="typeOfJob"
-                name="typeOfJob"
-                placeholder="Select job type"
-                value={formData.typeOfJob}
+                type="number"
+                id="value"
+                name="value"
+                placeholder="Enter job value"
+                value={formData.value}
                 onChange={handleInputChange}
               />
             </div>
+
+            <div className="form-field">
+              <label htmlFor="status">Status</label>
+              <select
+                id="status"
+                name="status"
+                value={formData.status}
+                onChange={handleInputChange}
+              >
+                <option value="">Select status</option>
+                <option value="Lead">Lead</option>
+                <option value="Backlog">Backlog</option>
+                <option value="In Progress">In Progress</option>
+                <option value="Waiting for Payment">Waiting for Payment</option>
+                <option value="Closed">Closed</option>
+              </select>
+            </div>
           </div>
 
-          {/* Form Row 3: Email Address (Full Width) */}
+          {/* Close Date */}
           <div className="form-row">
-            <div className="form-field full-width">
-              <label htmlFor="emailAddress">Email Address</label>
-              <input
-                type="email"
-                id="emailAddress"
-                name="emailAddress"
-                placeholder="Enter email address"
-                value={formData.emailAddress}
-                onChange={handleInputChange}
-              />
+            <div className="form-field">
+              <label>Close Date - Day</label>
+              <select name="close_day" value={formData.close_day} onChange={handleInputChange}>
+                {Array.from({ length: 31 }, (_, i) => (
+                  <option key={i + 1} value={i + 1}>{i + 1}</option>
+                ))}
+              </select>
+            </div>
+
+            <div className="form-field">
+              <label>Close Date - Month</label>
+              <select name="close_month" value={formData.close_month} onChange={handleInputChange}>
+                {Array.from({ length: 12 }, (_, i) => (
+                  <option key={i + 1} value={i + 1}>{i + 1}</option>
+                ))}
+              </select>
+            </div>
+
+            <div className="form-field">
+              <label>Close Date - Year</label>
+              <select name="close_year" value={formData.close_year} onChange={handleInputChange}>
+                {['2024', '2025', '2026'].map(year => (
+                  <option key={year} value={year}>{year}</option>
+                ))}
+              </select>
             </div>
           </div>
 
-          {/* Form Row 4: Notes (Full Width, Textarea) */}
-          <div className="form-row">
-            <div className="form-field full-width">
-              <label htmlFor="notes">Notes</label>
-              <textarea
-                id="notes"
-                name="notes"
-                placeholder="Enter any additional notes or requirements"
-                value={formData.notes}
-                onChange={handleInputChange}
-                rows="4"
-              />
-            </div>
-          </div>
-
-          {/* Attachments section placeholder */}
-          <div className="form-section">
-            <h4>Attachments</h4>
-            <div className="attachment-area">
-              <p>Drag and drop files here or</p>
-              <button type="button">Browse Files</button>
-              <p>Maximum file size: 10MB</p>
-            </div>
-          </div>
         </div>
 
-        {/* Modal Footer: Contains the action buttons */}
         <div className="modal-footer">
           <button type="button" onClick={onClose} className="cancel-button">
             Cancel
           </button>
           <button type="button" className="save-lead-button" onClick={handleSaveLead}>
-            Save Lead
+            Save Job
           </button>
         </div>
       </div>
