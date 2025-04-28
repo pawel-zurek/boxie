@@ -14,7 +14,7 @@ function AddDealButton({ onClick }) {
     // Attach the handleClick function to the button's onClick event
     <button className="add-deal-button" onClick={handleClick}>
       {/* Add a plus icon here later */}
-      <span>Add Deal</span>
+      <span>Add Job</span>
     </button>
   );
 }

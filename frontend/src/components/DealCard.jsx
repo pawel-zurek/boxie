@@ -2,27 +2,25 @@
 import React from 'react';
 import Tag from './Tag';
 import AvatarGroup from './AvatarGroup';
-// *** Import Draggable ***
 import { Draggable } from '@hello-pangea/dnd';
-// import './DealCard.css'; // Your CSS file for deal cards
 
-// DealCard component now receives 'index' prop from the mapping in PipelineColumn
-function DealCard({ deal, index }) { // *** Accept the index prop ***
+// Now DealCard also accepts onDealClick
+function DealCard({ deal, index, onDealClick }) {  // <-- Accept onDealClick
   return (
-    // *** Wrap the main deal card div with Draggable ***
     <Draggable draggableId={deal.id} index={index}>
       {(provided, snapshot) => (
-        // Apply these props and ref to the element that serves as the draggable item
         <div
           className="deal-card"
-          {...provided.draggableProps} // Props for the draggable element itself
-          {...provided.dragHandleProps} // Props that designate *how* the user can drag the element (e.g., the entire card)
-          ref={provided.innerRef} // Apply the innerRef
-          // Optional: Add styling based on snapshot.isDragging
-          // style={{
-          //   ...provided.draggableProps.style,
-          //   backgroundColor: snapshot.isDragging ? 'lightgreen' : 'undefined', // Or original color
-          // }}
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}
+          ref={provided.innerRef}
+          onClick={() => onDealClick(deal.id)}   // <-- Add click handler here
+          style={{
+            ...provided.draggableProps.style,
+            cursor: 'pointer',                    // <-- Make cursor a pointer
+            backgroundColor: snapshot.isDragging ? 'lightgreen' : 'white', // Optional
+            transition: 'background-color 0.2s ease',
+          }}
         >
           {/* Deal Header: Title and Value */}
           <div className="deal-header">
@@ -51,7 +49,6 @@ function DealCard({ deal, index }) { // *** Accept the index prop ***
         </div>
       )}
     </Draggable>
-    // *** End Draggable ***
   );
 }
 

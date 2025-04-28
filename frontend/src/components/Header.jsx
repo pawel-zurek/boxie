@@ -2,22 +2,32 @@
 import React from 'react';
 import AddDealButton from './AddDealButton';
 import SearchBar from './SearchBar';
-import UserDropdown from './UserDropdown';
+import { useNavigate } from 'react-router-dom';
 
 // Make sure Header accepts onAddDealClick as a prop
 function Header({ onAddDealClick }) {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');   // Remove token from localStorage
+    navigate('/');                      // Navigate to login
+    window.location.reload();            // Force reload to reset auth state
+  };
+
   return (
     <header className="app-header">
       <div className="header-content">
         <div>Main screen</div>
-        <h1>Sales Pipeline</h1>
-        {/* Pass the received onAddDealClick prop down as onClick to AddDealButton */}
+        <h1>Your Jobs</h1>
         <AddDealButton onClick={onAddDealClick} />
       </div>
 
       <div className="header-actions">
         <SearchBar />
-        <UserDropdown />
+        <button onClick={handleLogout} className="logout-button">
+            Logout
+        </button>
+
       </div>
     </header>
   );

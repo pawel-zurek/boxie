@@ -111,6 +111,7 @@ body {
     border: 1px solid #ccc; /* Light gray border */
     border-radius: 4px; /* Slightly rounded corners */
     font-size: 16px;
+    color: #000000;
     box-sizing: border-box; /* Include padding and border in the element's total width */
     background-color: #fff; /* Ensure white background */
     /* Appearance reset is moved to select.form-input */
@@ -178,10 +179,3 @@ select.form-input::-ms-expand {
     margin-bottom: 15px; /* Space below the message */
     text-align: center; /* Center the success text */
 }
-
-
-/* Optional: Styles specific to the register form or its container if needed */
-/*
-.register-form-container {}
-.register-form {}
-*/

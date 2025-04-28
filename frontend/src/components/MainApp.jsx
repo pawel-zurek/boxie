@@ -1,5 +1,6 @@
 // src/components/MainApp.jsx
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './MainApp.css';
 import Header from './Header';
 import SalesPipelineBoard from './SalesPipelineBoard';
@@ -14,8 +15,8 @@ const stages = ["Lead", "Backlog", "In Progress", "Waiting for Payment", "Closed
 function MainApp() {
   const [pipelineData, setPipelineData] = useState({ columns: [] });
   const [isAddDealModalOpen, setIsAddDealModalOpen] = useState(false);
+  const navigate = useNavigate(); // <--- ADD THIS
 
-  // Fetch jobs from backend when MainApp loads
   useEffect(() => {
     const fetchJobs = async () => {
       const token = localStorage.getItem("token");
@@ -34,7 +35,6 @@ function MainApp() {
         const jobs = await response.json();
         console.log("Fetched jobs:", jobs);
 
-        // Organize jobs into columns based on status
         const columns = stages.map(stage => ({
           id: stage,
           title: stage,
@@ -47,7 +47,7 @@ function MainApp() {
               tags: [],
               assignees: [],
               dueDate: job.close_date ? new Date(job.close_date).toLocaleDateString() : 'N/A',
-              raw: job // Store full job data if needed later
+              raw: job
             })),
         }));
 
@@ -59,6 +59,10 @@ function MainApp() {
 
     fetchJobs();
   }, []);
+
+  const handleDealClick = (jobId) => {
+    navigate(`/job/${jobId}`);
+  };
 
   const onDragEnd = async (result) => {
     const { source, destination, draggableId } = result;
@@ -97,7 +101,6 @@ function MainApp() {
 
     setPipelineData({ columns: newColumns });
 
-    // 🔥 Send PATCH request to update status
     const token = localStorage.getItem("token");
 
     try {
@@ -122,8 +125,6 @@ function MainApp() {
   };
 
   const handleSaveNewDeal = () => {
-    // After a new deal is added, ideally re-fetch jobs from backend
-    // or optimistically update state if you want later
     toggleAddDealModal();
   };
 
@@ -131,7 +132,7 @@ function MainApp() {
     <div className="App">
       <Header onAddDealClick={toggleAddDealModal} />
       <DragDropContext onDragEnd={onDragEnd}>
-        <SalesPipelineBoard data={pipelineData} />
+        <SalesPipelineBoard data={pipelineData} onDealClick={handleDealClick} />
       </DragDropContext>
       {isAddDealModalOpen && (
         <AddDealModal

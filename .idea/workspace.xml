@@ -5,9 +5,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="48639d83-2eec-4ba8-8a7c-203d3d234227" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/frontend/src/App.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/JobPage.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/app.db" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/App.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/AddDealButton.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/AddDealButton.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/AddDealModal.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/AddDealModal.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/DealCard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/DealCard.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Header.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Header.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Login.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Login.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Login.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Login.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/MainApp.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/MainApp.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/components/MainApp.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/MainApp.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/PipelineColumn.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/PipelineColumn.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/SalesPipelineBoard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/SalesPipelineBoard.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/SearchBar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/SearchBar.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/UserDropdown.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/main.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/main.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

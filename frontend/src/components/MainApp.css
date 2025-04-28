@@ -7,16 +7,10 @@ body {
   background-color: #F9FAFB; /* Background color from the mockup */
 }
 
-/* Styles for the main App div */
+
 .App {
   box-sizing: border-box;
-  /*
-    Remove or increase max-width to allow the content to fill the screen.
-    Removing it makes the container take up the full width of the body.
-  */
-  /* max-width: 1440px; */ /* <-- COMMENTED OUT or REMOVED */
-  margin: 0 auto;     /* Keep this if you keep max-width to center,
-                         or remove if you want it left-aligned and full width */
+  margin: 0 auto;
 
   padding: 0px; /* From mockup */
   background: #FFFFFF; /* From mockup */
@@ -29,9 +23,6 @@ body {
   overflow: hidden; /* Hide any overflow from child elements initially */
 }
 
-/* -------------------- Header Styles -------------------- */
-
-/* Styles for the Header container */
 .app-header {
   padding: 24px; /* Based on mockup spacing */
   border-bottom: 1px solid #ccc; /* A common separator */
@@ -49,6 +40,33 @@ body {
   gap: 20px; /* Space between title and Add Deal button */
 }
 
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+}
+
+.header-buttons {
+  display: flex;
+  align-items: center;
+}
+
+.logout-button {
+  margin-left: 1rem;
+  padding: 0.5rem 1rem;
+  background-color: #3e6aed;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.logout-button:hover {
+  background-color: #d32f2f;
+}
+
 .app-header h1 {
   font-family: 'Roboto', sans-serif;
   font-weight: 700;
@@ -64,7 +82,6 @@ body {
   gap: 15px; /* Space between search and user avatar */
 }
 
-/* Basic Add Deal Button Styles (translate from mockup CSS) */
 .add-deal-button { /* Apply this class to your actual button */
   background: #2563EB;
   color: #FFFFFF;
@@ -79,7 +96,6 @@ body {
   gap: 5px; /* Space between plus icon and text */
 }
 
-/* Search Input Basic Styles */
 .search-input { /* Apply this class to your input */
   box-sizing: border-box;
   background: #FFFFFF;
@@ -91,9 +107,6 @@ body {
   /* You might want to set a width here, e.g., width: 256px; */
 }
 
-/* -------------------- Board and Column Styles -------------------- */
-
-/* Styles for the Sales Pipeline Board container (the area holding columns) */
 .sales-pipeline-board {
   display: flex; /* Arrange columns side-by-side */
   padding: 24px; /* Based on mockup spacing around the board */
@@ -102,7 +115,6 @@ body {
   flex-grow: 1; /* Allow the board to take up available vertical space */
 }
 
-/* Styles for the Pipeline Column container */
 .pipeline-column {
   min-width: 280px; /* Give columns a minimum width */
   flex-shrink: 0; /* Prevent columns from shrinking below min-width */
@@ -120,7 +132,6 @@ body {
   overflow-y: auto; /* Add vertical scrolling within the column if cards exceed height */
 }
 
-/* Styles for the column header (Title and Count) */
 .column-header {
   display: flex; /* Arrange title and count side-by-side */
   align-items: center; /* Vertically align */
@@ -162,14 +173,6 @@ body {
   /* background-color: #f0f0f0; */ /* Optional: Light background for empty state */
 }
 
-/* Remove the temporary placeholder style (if you haven't already) */
-/* .pipeline-column-placeholder {
-    ... styles ...
-} */
-
-/* -------------------- Deal Card Styles -------------------- */
-
-/* Styles for the individual Deal Card container */
 .deal-card {
   background-color: #FFFFFF; /* From mockup */
   box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05); /* From mockup */
@@ -182,6 +185,11 @@ body {
   transition: background-color 0.2s ease; /* Smooth transition for dragging styles */
   user-select: none; /* Prevent text selection during drag */
   min-height: 80px; /* Minimum height for cards */
+}
+
+.deal-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 /* Styles for the deal header (title and value) */
@@ -208,7 +216,6 @@ body {
     flex-shrink: 0; /* Prevent value from shrinking */
 }
 
-/* Styles for the tags container (uses flexbox internally for tags) */
 .deal-tags {
     display: flex;
     flex-wrap: wrap; /* Allow tags to wrap to the next line */
@@ -216,7 +223,6 @@ body {
     font-size: 12px; /* Base font size for tags */
 }
 
-/* Styles for the deal footer (assignees and due date) */
 .deal-footer {
     display: flex; /* Arrange assignees and due date side-by-side */
     justify-content: space-between; /* Push due date to the right */
@@ -240,7 +246,6 @@ body {
     line-height: 1.2; /* Adjust line height */
 }
 
-/* Optional: Add styles for dragging state provided by react-beautiful-dnd */
 .deal-card.is-dragging {
   /* Example: Slightly rotate and add a stronger shadow */
   transform: rotate(2deg);
@@ -248,7 +253,6 @@ body {
   background-color: #e0e0e0; /* Change background while dragging */
 }
 
-/* Optional: Add styles for the droppable area when dragging over */
 .deal-cards-container.is-dragging-over {
     background-color: #f0f0f0; /* Light background when dragging over */
 }
