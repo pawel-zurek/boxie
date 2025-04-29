@@ -15,12 +15,7 @@ function DealCard({ deal, index, onDealClick }) {  // <-- Accept onDealClick
           {...provided.dragHandleProps}
           ref={provided.innerRef}
           onClick={() => onDealClick(deal.id)}   // <-- Add click handler here
-          style={{
-            ...provided.draggableProps.style,
-            cursor: 'pointer',                    // <-- Make cursor a pointer
-            backgroundColor: snapshot.isDragging ? 'lightgreen' : 'white', // Optional
-            transition: 'background-color 0.2s ease',
-          }}
+
         >
           {/* Deal Header: Title and Value */}
           <div className="deal-header">
