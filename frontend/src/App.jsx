@@ -1,11 +1,12 @@
-// src/App.jsx
+// ALL IMPORTS FIRST (TOP OF FILE)
 import React, { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Login from "./components/Login";
 import MainApp from "./components/MainApp";
 import JobPage from "./components/JobPage";
-import './App.css';
+import PersonPage from "./components/PersonPage"; // Import PersonPage correctly here
 
+// THEN your component function
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
@@ -22,16 +23,17 @@ function App() {
     return <Login onLoginSuccess={handleLoginSuccess} />;
   }
 
-  // If authenticated, show the whole app with routes
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/dashboard" element={<MainApp />} />
-        <Route path="/job/:jobId" element={<JobPage />} />
-        {/* Redirect any unknown route back to dashboard */}
-        <Route path="*" element={<Navigate to="/dashboard" replace />} />
-      </Routes>
-    </BrowserRouter>
+    <div className="App">
+      <BrowserRouter>
+        <Routes>
+          <Route path="/dashboard" element={<MainApp />} />
+          <Route path="/job/:jobId" element={<JobPage />} />
+          <Route path="/person/:personId" element={<PersonPage />} />
+          <Route path="*" element={<Navigate to="/dashboard" replace />} />
+        </Routes>
+      </BrowserRouter>
+    </div>
   );
 }
 

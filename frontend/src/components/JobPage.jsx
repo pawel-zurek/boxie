@@ -162,6 +162,18 @@ function JobPage() {
               </div>
             </section>
 
+            <section>
+            <div className="contact-item">
+                <span>Client:</span>
+                <button
+                    className="link-button"
+                    onClick={() => navigate(`/person/${job.person_id}`)}
+                >
+                    View Person Details
+                </button>
+            </div>
+            </section>
+
             {/* Stages Timeline Section */}
             <section className="stages-timeline-section card">
               <h2>Stages Timeline</h2>
