@@ -1,0 +1,344 @@
+/* src/components/JobPage.css */
+
+/* Basic body styling (optional, but good for context) */
+body {
+    margin: 0; /* Remove default body margin */
+    font-family: sans-serif; /* Use a common sans-serif font */
+    background-color: #f8f9fa; /* Light gray background */
+}
+
+.job-page-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Make container at least viewport height */
+}
+
+/* Header Styling */
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem; /* Padding top/bottom and left/right */
+    background-color: #ffffff; /* White background */
+    border-bottom: 1px solid #dee2e6; /* Light border at the bottom */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); /* Subtle shadow */
+    position: sticky; /* Keep header fixed at the top */
+    top: 0;
+    z-index: 1000; /* Ensure header is above other content */
+}
+
+/* New style for the container of the back button in the header */
+.header-left-button {
+    /* You can add padding or margin here if needed */
+}
+
+
+/* Style for the Back to Dashboard Button in the header */
+.back-to-dashboard-button {
+    background-color: transparent; /* No background color */
+    color: #007bff; /* Blue text color */
+    border: none; /* No border */
+    padding: 0.5rem 1rem; /* Padding */
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    /* Remove the left margin that was on the add-deal-button */
+    transition: color 0.2s ease, background-color 0.2s ease;
+}
+
+.back-to-dashboard-button:hover {
+    color: #0056b3; /* Darker blue on hover */
+    background-color: #f8f9fa; /* Light background on hover */
+}
+
+
+/* Remove or adjust styles for the old header elements if they were specific */
+/* For example, if you had .header-left styles that are no longer needed */
+
+
+.header-right {
+    display: flex;
+    align-items: center;
+}
+
+.search-input {
+    padding: 0.5rem 1rem;
+    border: 1px solid #ced4da; /* Light gray border */
+    border-radius: 4px;
+    margin-right: 1rem; /* Space between search and icons */
+    font-size: 1rem;
+}
+
+/* Main Content Area */
+.job-detail-content {
+    padding: 2rem;
+    flex-grow: 1; /* Allow content area to fill available space */
+}
+
+/* Deal Summary Section */
+.deal-summary-section {
+    background-color: #ffffff; /* White background */
+    padding: 1.5rem;
+    margin-bottom: 2rem; /* Space below this section */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    display: flex; /* Use flexbox for layout */
+    flex-direction: column; /* Stack title, status, and actions */
+    gap: 1rem; /* Space between flex items */
+}
+
+.deal-title {
+    font-size: 1.75rem; /* Larger font size for the deal title */
+    font-weight: bold;
+    color: #343a40;
+}
+
+.deal-status-info {
+    display: flex; /* Use flexbox to align status and close date */
+    align-items: center;
+    gap: 1rem; /* Space between status and close date */
+}
+
+.status-pill {
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px; /* Pill shape */
+    font-size: 0.875rem; /* Smaller font size */
+    font-weight: bold;
+    text-transform: uppercase; /* Uppercase text */
+}
+
+/* Specific status colors */
+.status-waiting {
+    background-color: #d4edda; /* Light green background */
+    color: #155724; /* Dark green text */
+}
+
+.status-closed-won {
+    background-color: #cce5ff; /* Light blue background */
+    color: #004085; /* Dark blue text */
+}
+
+.status-closed-lost {
+    background-color: #f8d7da; /* Light red background */
+    color: #721c24; /* Dark red text */
+}
+
+.status-default {
+    background-color: #e2e3e5; /* Light gray background */
+    color: #383d41; /* Dark gray text */
+}
+
+
+.close-date-pill {
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px; /* Pill shape */
+    font-size: 0.875rem;
+    background-color: #f8d7da; /* Light red background (matching screenshot) */
+    color: #721c24; /* Dark red text */
+}
+
+.deal-actions {
+    display: flex;
+    gap: 0.5rem; /* Space between buttons */
+    justify-content: flex-end; /* Align buttons to the right */
+}
+
+.edit-button,
+.back-button { /* Keep .back-button style if you kept the local back button */
+    padding: 0.5rem 1rem;
+    border: 1px solid #ced4da; /* Light gray border */
+    border-radius: 4px;
+    background-color: #ffffff; /* White background */
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.edit-button:hover,
+.back-button:hover { /* Keep .back-button style if you kept the local back button */
+    background-color: #e9ecef; /* Lighter gray on hover */
+    border-color: #adb5bd;
+}
+
+/* Sections Container (Two Columns) */
+.detail-sections-container {
+    display: grid; /* Use CSS Grid for the two-column layout */
+    grid-template-columns: 2fr 1fr; /* Left column takes 2 parts, right takes 1 part */
+    gap: 2rem; /* Space between the columns */
+}
+
+/* Column Styling (optional, but good for clarity) */
+.left-column {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem; /* Space between cards in the left column */
+}
+
+.right-column {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem; /* Space between cards in the right column */
+}
+
+/* Card Styling for Sections */
+.card {
+    background-color: #ffffff; /* White background */
+    padding: 1.5rem;
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+/* Section Headings */
+.card h2 {
+    font-size: 1.25rem; /* Medium font size for section titles */
+    margin-top: 0; /* Remove top margin */
+    margin-bottom: 1rem; /* Space below heading */
+    color: #343a40;
+}
+
+/* Property Details and Contact Info Items */
+.detail-item,
+.contact-item {
+    display: flex; /* Use flexbox to align label/icon and value */
+    justify-content: space-between; /* Push label/icon and value to ends */
+    margin-bottom: 0.75rem; /* Space between items */
+    font-size: 1rem;
+    color: #495057; /* Slightly darker text color */
+}
+
+.detail-item:last-child,
+.contact-item:last-child {
+    margin-bottom: 0; /* No margin for the last item */
+}
+
+.detail-label {
+    font-weight: bold;
+    color: #343a40; /* Darker text for labels */
+}
+
+.contact-item {
+    align-items: center; /* Vertically align icon and text */
+}
+
+.contact-icon {
+    margin-right: 0.5rem; /* Space between icon and text */
+    /* Style your icons here (size, color) */
+}
+
+/* Stages Timeline Styling */
+.timeline-list {
+    list-style: none; /* Remove default list bullets */
+    padding: 0; /* Remove default padding */
+    margin: 0; /* Remove default margin */
+}
+
+.timeline-item {
+    display: flex; /* Use flexbox to align dot and content */
+    align-items: flex-start; /* Align items to the top */
+    margin-bottom: 1.5rem; /* Space between timeline items */
+    position: relative; /* Needed for positioning the line */
+}
+
+.timeline-item:last-child {
+    margin-bottom: 0; /* No margin for the last item */
+}
+
+.timeline-dot {
+    width: 12px; /* Size of the dot */
+    height: 12px;
+    background-color: #007bff; /* Blue dot color */
+    border-radius: 50%; /* Make it round */
+    flex-shrink: 0; /* Prevent the dot from shrinking */
+    margin-right: 1rem; /* Space between dot and content */
+    position: relative;
+    z-index: 1; /* Ensure dot is above the line */
+    margin-top: 0.25rem; /* Adjust vertical alignment with text */
+}
+
+/* Add a vertical line connecting timeline dots */
+.timeline-item::before {
+    content: '';
+    position: absolute;
+    top: 0.5rem; /* Start the line below the dot */
+    left: 5px; /* Center the line under the dot */
+    bottom: -1.5rem; /* Extend the line down (adjust based on item margin) */
+    width: 2px; /* Thickness of the line */
+    background-color: #ced4da; /* Light gray line color */
+    z-index: 0; /* Place the line behind the dot */
+}
+
+.timeline-item:last-child::before {
+    display: none; /* Hide the line for the last item */
+}
+
+
+.timeline-content {
+    display: flex;
+    flex-direction: column; /* Stack name and date */
+}
+
+.stage-name {
+    font-weight: bold;
+    color: #343a40;
+    margin-bottom: 0.25rem; /* Space between name and date */
+}
+
+.stage-date {
+    font-size: 0.875rem; /* Smaller font size for date */
+    color: #6c757d; /* Muted text color */
+}
+
+/* Loading state basic styling */
+.loading-state {
+    text-align: center;
+    font-size: 1.5rem;
+    color: #6c757d;
+    margin-top: 2rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .page-header {
+        flex-direction: column;
+        padding: 1rem;
+    }
+
+    .header-left-button { /* Adjust layout for the button on smaller screens */
+        width: 100%;
+        text-align: center;
+        margin-bottom: 1rem;
+    }
+
+    .back-to-dashboard-button {
+        padding: 0.75rem 1.5rem; /* Slightly larger touch area */
+        width: auto; /* Let button size itself */
+    }
+
+    .header-right {
+        margin-top: 1rem;
+        width: 100%; /* Allow search and icons to take full width */
+        justify-content: center; /* Center search and icons */
+    }
+
+    .search-input {
+        flex-grow: 1; /* Allow search input to fill space */
+        margin-right: 0.5rem;
+    }
+
+    .job-detail-content {
+        padding: 1rem;
+    }
+
+    .detail-sections-container {
+        grid-template-columns: 1fr; /* Stack columns on smaller screens */
+        gap: 1.5rem;
+    }
+
+    .deal-summary-section {
+         gap: 0.75rem; /* Reduce gap on smaller screens */
+    }
+
+     .deal-actions {
+        justify-content: center; /* Center buttons on smaller screens */
+    }
+}
