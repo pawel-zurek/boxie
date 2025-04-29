@@ -1,11 +1,8 @@
 // src/components/JobPage.jsx
 import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-// Import the CSS file
+import SearchBar from './SearchBar';
 import './JobPage.css';
-// You might need to import icons if you want them next to phone/email or on the back button
-// import { PhoneIcon, MailIcon } from '@heroicons/react/solid';
-// import { ArrowLeftIcon } from '@heroicons/react/solid'; // Example back arrow icon
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -88,10 +85,7 @@ function JobPage() {
         </div>
 
         <div className="header-right">
-          {/* Search input */}
-          <input type="text" placeholder="Search deals..." className="search-input" />
-          {/* Search icon - you'll need an SVG or icon font */}
-          {/* User icon - you'll need an SVG or icon font */}
+            <SearchBar />
         </div>
       </header>
 
@@ -149,7 +143,7 @@ function JobPage() {
               {/* City - Placeholder */}
               <div className="detail-item">
                 <span className="detail-label">City</span>
-                <span className="detail-value">Beverly Hills</span> {/* Placeholder City */}
+                <span className="detail-value">{job.city}</span> {/* Placeholder City */}
               </div>
             </section>
 
