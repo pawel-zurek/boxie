@@ -15,7 +15,7 @@ const stages = ["Lead", "Backlog", "In Progress", "Waiting for Payment", "Closed
 function MainApp() {
   const [pipelineData, setPipelineData] = useState({ columns: [] });
   const [isAddDealModalOpen, setIsAddDealModalOpen] = useState(false);
-  const navigate = useNavigate(); // <--- ADD THIS
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchJobs = async () => {
@@ -35,21 +35,27 @@ function MainApp() {
         const jobs = await response.json();
         console.log("Fetched jobs:", jobs);
 
-        const columns = stages.map(stage => ({
-          id: stage,
-          title: stage,
-          deals: jobs
-            .filter(job => job.status === stage)
-            .map(job => ({
-              id: String(job.id),
-              title: job.name,
-              value: job.value ? `€${Number(job.value).toLocaleString()}` : '€0',
-              tags: [],
-              assignees: [],
-              dueDate: job.close_date ? new Date(job.close_date).toLocaleDateString() : 'N/A',
-              raw: job
-            })),
-        }));
+        const columns = stages.map(stage => {
+          const stageJobs = jobs.filter(job => job.status === stage);
+          const deals = stageJobs.map(job => ({
+            id: String(job.id),
+            title: job.name,
+            value: job.value ? Number(job.value) : 0, // Store the raw number for calculation
+            formattedValue: job.value ? `€${Number(job.value).toLocaleString()}` : '€0', // Keep the formatted value for display
+            tags: [],
+            assignees: [],
+            dueDate: job.close_date ? new Date(job.close_date).toLocaleDateString() : 'N/A',
+            raw: job
+          }));
+          const totalValue = deals.reduce((sum, deal) => sum + deal.value, 0);
+
+          return {
+            id: stage,
+            title: stage,
+            deals: deals,
+            totalValue: `€${totalValue.toLocaleString()}`, // Format the total value
+          };
+        });
 
         setPipelineData({ columns });
       } catch (error) {
@@ -99,7 +105,13 @@ function MainApp() {
     newColumns[sourceColIndex] = sourceColumn;
     newColumns[destinationColIndex] = destinationColumn;
 
-    setPipelineData({ columns: newColumns });
+    // Recalculate total values after drag and drop
+    const updatedColumns = newColumns.map(column => ({
+      ...column,
+      totalValue: `€${column.deals.reduce((sum, deal) => sum + (deal.value || 0), 0).toLocaleString()}`,
+    }));
+
+    setPipelineData({ columns: updatedColumns });
 
     const token = localStorage.getItem("token");
 
