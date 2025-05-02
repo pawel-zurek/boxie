@@ -3,31 +3,32 @@ import React from 'react';
 import AddDealButton from './AddDealButton';
 import SearchBar from './SearchBar';
 import { useNavigate } from 'react-router-dom';
+import './Header.css'; // Import a CSS file for styling
 
-// Make sure Header accepts onAddDealClick as a prop
 function Header({ onAddDealClick }) {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    localStorage.removeItem('token');   // Remove token from localStorage
-    navigate('/');                      // Navigate to login
-    window.location.reload();            // Force reload to reset auth state
+    localStorage.removeItem('token');
+    navigate('/');
+    window.location.reload();
   };
 
   return (
     <header className="app-header">
-      <div className="header-content">
-        <div>Main screen</div>
-        <h1>Your Jobs</h1>
-        <AddDealButton onClick={onAddDealClick} />
+      <div className="header-left">
+        <div className="logo">Your Jobs</div> {/* Logo */}
+        <AddDealButton onClick={onAddDealClick} /> {/* Add button after logo */}
       </div>
 
-      <div className="header-actions">
+      <div className="header-center">
         <SearchBar />
-        <button onClick={handleLogout} className="logout-button">
-            Logout
-        </button>
+      </div>
 
+      <div className="header-right">
+        <button onClick={handleLogout} className="logout-button">
+          Logout
+        </button>
       </div>
     </header>
   );
