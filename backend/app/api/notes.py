@@ -6,6 +6,8 @@ from app.schemas.note import NoteCreate, NoteOut, NoteUpdate
 from app.crud import note
 from app.core.security import get_current_user
 from fastapi import Depends
+from app.db.session import get_db
+
 
 router = APIRouter()
 

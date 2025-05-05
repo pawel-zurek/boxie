@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from app.api import auth, users, persons, jobs, activities, notes
+from app.api import auth, users, persons, jobs, activities, notes, status_history
 from app.db.session import engine
 from app.models import user, person, job, activity, note
 from fastapi.middleware.cors import CORSMiddleware
@@ -34,6 +34,7 @@ app.include_router(persons.router, prefix="/api/persons", tags=["persons"])
 app.include_router(jobs.router, prefix="/api/jobs", tags=["jobs"])
 app.include_router(activities.router, prefix="/api/activities", tags=["activities"])
 app.include_router(notes.router, prefix="/api/notes", tags=["notes"])
+app.include_router(status_history.router)
 
 @app.get("/")
 def root():

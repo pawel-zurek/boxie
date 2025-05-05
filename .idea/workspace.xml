@@ -5,10 +5,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="48639d83-2eec-4ba8-8a7c-203d3d234227" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/app/api/status_history.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/app/crud/status_history.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/app/models/status_history.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/app/schemas/status_history.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/App.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/app.db" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/app/api/activities.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/api/activities.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/app/api/auth.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/api/auth.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/app/api/jobs.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/api/jobs.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/app/api/notes.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/api/notes.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/app/api/persons.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/api/persons.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/app/api/users.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/api/users.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/app/db/session.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/db/session.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/app/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/app/models/job.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/models/job.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/JobPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/JobPage.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

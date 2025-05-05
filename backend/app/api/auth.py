@@ -7,6 +7,8 @@ from app.core.security import verify_password, create_access_token
 from app.schemas.user import UserOut
 from app.schemas.user import UserCreate
 from app.crud import user
+from app.db.session import get_db
+
 
 router = APIRouter()
 

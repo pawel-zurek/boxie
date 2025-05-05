@@ -10,6 +10,7 @@ function JobPage() {
   const { jobId } = useParams();
   const navigate = useNavigate();
   const [job, setJob] = useState(null);
+  const [stagesTimeline, setStagesTimeline] = useState([]);
 
   // Placeholder data for sections not currently in your job object
   // You'll need to update your API to fetch this data
@@ -18,40 +19,54 @@ function JobPage() {
       phone: "+1 (555) 123-4567",
       email: "john.smith@email.com"
   });
-  const [stagesTimeline, setStagesTimeline] = useState([
-      { name: "Leads", date: "Jan 15, 2025" },
-      { name: "Contact mode", date: "Feb 1, 2025" },
-      { name: "Proposal", date: "Feb 15, 2025" },
-      // Add more stages here
-  ]);
 
   useEffect(() => {
-    const fetchJob = async () => {
-      const token = localStorage.getItem("token");
+  const fetchJobAndStatusHistory = async () => {
+    const token = localStorage.getItem("token");
 
-      try {
-        const response = await fetch(`${API_URL}/api/jobs/${jobId}`, {
-          headers: {
-            "Authorization": `Bearer ${token}`,
-          },
-        });
+    try {
+      // 1. Fetch the job
+      const jobResponse = await fetch(`${API_URL}/api/jobs/${jobId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
-        if (!response.ok) {
-          throw new Error("Failed to fetch job");
-        }
+      if (!jobResponse.ok) throw new Error("Failed to fetch job");
+      const jobData = await jobResponse.json();
+      setJob(jobData);
 
-        const jobData = await response.json();
-        console.log("Fetched job:", jobData);
-        setJob(jobData);
-        // You would ideally update notes, contactInfo, and stagesTimeline
-        // here if your API returned that data.
-      } catch (error) {
-        console.error("Error fetching job:", error);
-      }
-    };
+      // 2. Fetch the status history
+      const historyResponse = await fetch(`${API_URL}/jobs/${jobId}/status-history`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
-    fetchJob();
-  }, [jobId]);
+      if (!historyResponse.ok) throw new Error("Failed to fetch status history");
+
+      const historyData = await historyResponse.json();
+      console.log("Status history:", historyData); // 🔍 Log result
+
+      // Sort and transform
+      const formattedTimeline = historyData
+        .sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp))
+        .map(entry => ({
+          name: entry.status,
+          date: new Date(entry.timestamp).toLocaleDateString(),
+        }));
+
+      console.log("Formatted timeline:", formattedTimeline); // 🔍 Log mapped result
+
+      setStagesTimeline(formattedTimeline);
+    } catch (error) {
+      console.error("Error loading job or stage history:", error);
+      setStagesTimeline([]); // Fallback to empty
+    }
+  };
+
+  fetchJobAndStatusHistory();
+}, [jobId]);
 
   if (!job) {
     return <div className="loading-state">Loading...</div>;
@@ -129,9 +144,9 @@ function JobPage() {
 
           {/* Right Column */}
           <div className="right-column">
-            {/* Property Details Section */}
+            {/* Job Details Section */}
             <section className="property-details-section card">
-              <h2>Property Details</h2>
+              <h2>Job Details</h2>
               <div className="detail-item">
                 <span className="detail-label">Value</span>
                 <span className="detail-value">€{job.value ? Number(job.value).toLocaleString() : '0'}</span>
@@ -177,17 +192,22 @@ function JobPage() {
             {/* Stages Timeline Section */}
             <section className="stages-timeline-section card">
               <h2>Stages Timeline</h2>
-              <ul className="timeline-list">
-                {stagesTimeline.map((stage, index) => (
-                  <li key={index} className="timeline-item">
-                    <span className="timeline-dot"></span>
-                    <div className="timeline-content">
-                      <span className="stage-name">{stage.name}</span>
-                      <span className="stage-date">{stage.date}</span>
-                    </div>
-                  </li>
-                ))}
-              </ul>
+
+              {stagesTimeline.length === 0 ? (
+                <p className="no-history">No stage history available.</p>
+              ) : (
+                <ul className="timeline-list">
+                  {stagesTimeline.map((stage, index) => (
+                    <li key={index} className="timeline-item">
+                      <span className="timeline-dot"></span>
+                      <div className="timeline-content">
+                        <span className="stage-name">{stage.name}</span>
+                        <span className="stage-date">{stage.date}</span>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              )}
             </section>
           </div>
         </div>

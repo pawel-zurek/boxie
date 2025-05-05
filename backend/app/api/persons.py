@@ -7,6 +7,8 @@ from app.core.security import get_current_user
 from fastapi import Depends
 from typing import List
 from app.schemas.person import PersonOut
+from app.db.session import get_db
+
 
 router = APIRouter()
 

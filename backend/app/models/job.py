@@ -19,3 +19,4 @@ class Job(Base):
     person = relationship("Person", back_populates="jobs")
     activities = relationship("Activity", back_populates="job", cascade="all, delete")
     notes = relationship("Note", back_populates="job", cascade="all, delete")
+    status_history = relationship("JobStatusHistory", back_populates="job", cascade="all, delete")
