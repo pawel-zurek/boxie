@@ -11,14 +11,8 @@ function JobPage() {
   const navigate = useNavigate();
   const [job, setJob] = useState(null);
   const [stagesTimeline, setStagesTimeline] = useState([]);
-
-  // Placeholder data for sections not currently in your job object
-  // You'll need to update your API to fetch this data
-  const [notes, setNotes] = useState("Stunning luxury villa featuring 5 bedrooms and 4 bathrooms, spread across 4,500 sq ft of living space. The property includes a private pool, landscaped gardens, and state-of-the-art smart home features. Recently renovated with high-end finishes throughout.");
-  const [contactInfo, setContactInfo] = useState({
-      phone: "+1 (555) 123-4567",
-      email: "john.smith@email.com"
-  });
+  const [notes, setNotes] = useState("This is a note placeholder");
+  const [person, setPerson] = useState(null);
 
   useEffect(() => {
   const fetchJobAndStatusHistory = async () => {
@@ -35,6 +29,19 @@ function JobPage() {
       if (!jobResponse.ok) throw new Error("Failed to fetch job");
       const jobData = await jobResponse.json();
       setJob(jobData);
+
+      const personResponse = await fetch(`${API_URL}/api/persons/${jobData.person_id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (personResponse.ok) {
+          const personData = await personResponse.json();
+          setPerson(personData);
+        } else {
+          console.warn("Failed to fetch person data");
+        }
 
       // 2. Fetch the status history
       const historyResponse = await fetch(`${API_URL}/jobs/${jobId}/status-history`, {
@@ -165,28 +172,29 @@ function JobPage() {
             {/* Contact Information Section */}
             <section className="contact-info-section card">
               <h2>Contact Information</h2>
-              {/* Phone */}
-              <div className="contact-item">
-                 {/* <PhoneIcon className="contact-icon" />  Example icon */}
-                 <span>{contactInfo.phone}</span> {/* Using placeholder phone */}
-              </div>
-              {/* Email */}
-              <div className="contact-item">
-                 {/* <MailIcon className="contact-icon" /> Example icon */}
-                 <span>{contactInfo.email}</span> {/* Using placeholder email */}
-              </div>
-            </section>
 
-            <section>
-            <div className="contact-item">
-                <span>Client:</span>
-                <button
-                    className="link-button"
-                    onClick={() => navigate(`/person/${job.person_id}`)}
-                >
-                    View Person Details
-                </button>
-            </div>
+              {person ? (
+                <>
+                  <div className="contact-item">
+                    <span>{person.email}</span>
+                  </div>
+                  <div className="contact-item">
+                    <span>{person.phone_no}</span>
+                  </div>
+                  <div className="contact-item">
+                    <button
+                      className="link-button"
+                      onClick={() => navigate(`/person/${person.id}`)}
+                    >
+                      View Person Details
+                    </button>
+                  </div>
+                </>
+              ) : (
+                <div className="contact-item">
+                  <em>Loading contact info...</em>
+                </div>
+              )}
             </section>
 
             {/* Stages Timeline Section */}
