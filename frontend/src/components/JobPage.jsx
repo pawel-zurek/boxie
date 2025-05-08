@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import SearchBar from './SearchBar';
 import './JobPage.css';
+import EditDealModal from './EditDealModal';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -13,6 +14,7 @@ function JobPage() {
   const [stagesTimeline, setStagesTimeline] = useState([]);
   const [notes, setNotes] = useState("This is a note placeholder");
   const [person, setPerson] = useState(null);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
   useEffect(() => {
   const fetchJobAndStatusHistory = async () => {
@@ -116,6 +118,7 @@ function JobPage() {
         {/* Deal Summary Section (Title, Status, Close Date, Edit/Back Buttons) */}
         <div className="deal-summary-section">
           <div className="deal-title">{job.name}</div>
+          <div className="deal-header-row">
           <div className="deal-status-info">
             <span className={`status-pill ${getStatusClass(job.status)}`}>
               {job.status}
@@ -126,16 +129,8 @@ function JobPage() {
               </span>
             )}
           </div>
-            {/* Edit and Back Buttons (these are the local ones, keep if needed for section-specific actions) */}
-            {/* If you only want the header back button, you can remove these local buttons */}
-            <div className="deal-actions">
-                {/* You'll likely need an onClick handler for the Edit button */}
-                <button className="edit-button">Edit</button>
-                 {/* The original local back button - remove if only using header back button */}
-                {/* <button className="back-button" onClick={() => navigate('/dashboard')}>
-                    Back
-                </button> */}
-            </div>
+          <button className="edit-button" onClick={() => setIsEditModalOpen(true)}>Edit</button>
+        </div>
         </div>
 
         {/* Sections Container (Left and Right Columns) */}
@@ -217,9 +212,17 @@ function JobPage() {
                 </ul>
               )}
             </section>
+
           </div>
         </div>
       </div>
+      {isEditModalOpen && (
+              <EditDealModal
+                job={job}
+                onClose={() => setIsEditModalOpen(false)}
+                onSave={() => window.location.reload()} // or a smarter update
+              />
+            )}
     </div>
   );
 }
