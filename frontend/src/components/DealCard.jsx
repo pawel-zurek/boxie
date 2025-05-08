@@ -1,43 +1,64 @@
 // src/components/DealCard.jsx
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Tag from './Tag';
-import AvatarGroup from './AvatarGroup';
 import { Draggable } from '@hello-pangea/dnd';
+import './DealCard.css';
 
-// Now DealCard also accepts onDealClick
-function DealCard({ deal, index, onDealClick }) {  // <-- Accept onDealClick
+const API_URL = import.meta.env.VITE_API_URL;
+
+function DealCard({ deal, index, onDealClick }) {
+  const [personName, setPersonName] = useState('');
+
+  useEffect(() => {
+    const fetchPerson = async () => {
+      const token = localStorage.getItem("token");
+      if (!deal.raw?.person_id) return;
+
+      try {
+        const response = await fetch(`${API_URL}/api/persons/${deal.raw.person_id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (response.ok) {
+          const person = await response.json();
+          setPersonName(person.name);
+        }
+      } catch (err) {
+        console.warn(`Could not fetch person for job ${deal.id}`, err);
+      }
+    };
+
+    fetchPerson();
+  }, [deal.raw?.person_id, deal.id]);
+
   return (
     <Draggable draggableId={deal.id} index={index}>
-      {(provided, snapshot) => (
+      {(provided) => (
         <div
           className="deal-card"
           {...provided.draggableProps}
           {...provided.dragHandleProps}
           ref={provided.innerRef}
-          onClick={() => onDealClick(deal.id)}   // <-- Add click handler here
-
+          onClick={() => onDealClick(deal.id)}
         >
-          {/* Deal Header: Title and Value */}
           <div className="deal-header">
-            <h4 className="deal-title">{deal.title}</h4>
-            <div className="deal-value">{deal.value}</div>
+            <div className="deal-title-container">
+              <h4 className="deal-title">{deal.title}</h4>
+            </div>
+            <div className="deal-value">€{deal.raw?.value?.toLocaleString() ?? '0'}</div>
           </div>
 
-          {/* Tags */}
           <div className="deal-tags">
             {deal.tags && deal.tags.map(tagText => (
               <Tag key={tagText} text={tagText} color={tagText} />
             ))}
           </div>
 
-          {/* Assignees and Due Date */}
           <div className="deal-footer">
             <div className="deal-assignees">
-              {deal.assignees && deal.assignees.length > 0 ? (
-                <AvatarGroup assignees={deal.assignees} />
-              ) : (
-                <span>No Assignees</span>
-              )}
+              {personName && <p className="deal-subtitle">Client: {personName}</p>}
             </div>
             <div className="deal-due-date">Due {deal.dueDate}</div>
           </div>
