@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import './AddDealModal.css'; // Reuse existing styles
+import React, { useEffect, useState } from 'react';
+import './AddDealModal.css'; // Reuse styling
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -11,21 +11,40 @@ function EditDealModal({ job, onClose, onSave }) {
     value: job.value || '',
     status: job.status || '',
     close_day: new Date(job.close_date).getDate().toString(),
-    close_month: new Date(job.close_date).getMonth().toString(),
+    close_month: (new Date(job.close_date).getMonth() + 1).toString(),
     close_year: new Date(job.close_date).getFullYear().toString(),
+    person_id: job.person_id ? String(job.person_id) : '',
   });
+
+  const [persons, setPersons] = useState([]);
+  const [loadingPersons, setLoadingPersons] = useState(true);
+
+  useEffect(() => {
+    const fetchPersons = async () => {
+      const token = localStorage.getItem("token");
+      try {
+        const response = await fetch(`${API_URL}/api/persons/`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        if (!response.ok) throw new Error("Failed to fetch persons");
+        const data = await response.json();
+        setPersons(data);
+      } catch (err) {
+        console.error("Error loading persons:", err);
+      } finally {
+        setLoadingPersons(false);
+      }
+    };
+    fetchPersons();
+  }, []);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [name]: value,
-    }));
+    setFormData(prev => ({ ...prev, [name]: value }));
   };
 
   const handleSaveChanges = async () => {
-      const closeDate = `${formData.close_year}-${String(formData.close_month).padStart(2, '0')}-${String(formData.close_day).padStart(2, '0')}T00:00:00`;
-
+    const closeDate = `${formData.close_year}-${String(formData.close_month).padStart(2, '0')}-${String(formData.close_day).padStart(2, '0')}T00:00:00`;
 
     const backendData = {
       name: formData.name,
@@ -34,7 +53,10 @@ function EditDealModal({ job, onClose, onSave }) {
       value: parseInt(formData.value) || 0,
       status: formData.status,
       close_date: closeDate,
+      person_id: formData.person_id ? parseInt(formData.person_id) : null,
     };
+
+    console.log("PATCH payload:", backendData);
 
     try {
       const token = localStorage.getItem("token");
@@ -47,17 +69,13 @@ function EditDealModal({ job, onClose, onSave }) {
         body: JSON.stringify(backendData),
       });
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const updated = await response.json();
-      console.log('Job updated:', updated);
+      if (!response.ok) throw new Error("Failed to update job");
+      await response.json();
       onSave();
       onClose();
     } catch (error) {
-      console.error('Error updating job:', error);
-      alert('There was an error updating the job.');
+      console.error("Error updating job:", error);
+      alert("There was an error updating the job.");
     }
   };
 
@@ -75,61 +93,35 @@ function EditDealModal({ job, onClose, onSave }) {
         </div>
 
         <div className="modal-body">
+          {/* Name */}
           <div className="form-row">
             <div className="form-field full-width">
               <label htmlFor="name">Job Name</label>
-              <input
-                type="text"
-                id="name"
-                name="name"
-                value={formData.name}
-                onChange={handleInputChange}
-              />
+              <input type="text" name="name" value={formData.name} onChange={handleInputChange} />
             </div>
           </div>
 
+          {/* Address + City */}
           <div className="form-row">
             <div className="form-field">
               <label htmlFor="address">Address</label>
-              <input
-                type="text"
-                id="address"
-                name="address"
-                value={formData.address}
-                onChange={handleInputChange}
-              />
+              <input type="text" name="address" value={formData.address} onChange={handleInputChange} />
             </div>
             <div className="form-field">
               <label htmlFor="city">City</label>
-              <input
-                type="text"
-                id="city"
-                name="city"
-                value={formData.city}
-                onChange={handleInputChange}
-              />
+              <input type="text" name="city" value={formData.city} onChange={handleInputChange} />
             </div>
           </div>
 
+          {/* Value, Status, Client Dropdown */}
           <div className="form-row">
             <div className="form-field">
               <label htmlFor="value">Value (€)</label>
-              <input
-                type="number"
-                id="value"
-                name="value"
-                value={formData.value}
-                onChange={handleInputChange}
-              />
+              <input type="number" name="value" value={formData.value} onChange={handleInputChange} />
             </div>
             <div className="form-field">
               <label htmlFor="status">Status</label>
-              <select
-                id="status"
-                name="status"
-                value={formData.status}
-                onChange={handleInputChange}
-              >
+              <select name="status" value={formData.status} onChange={handleInputChange}>
                 <option value="">Select status</option>
                 <option value="Lead">Lead</option>
                 <option value="Backlog">Backlog</option>
@@ -138,8 +130,30 @@ function EditDealModal({ job, onClose, onSave }) {
                 <option value="Closed">Closed</option>
               </select>
             </div>
+            <div className="form-field">
+              <label htmlFor="person_id">Client</label>
+              {loadingPersons ? (
+                <p>Loading clients...</p>
+              ) : persons.length === 0 ? (
+                <p>Please add a client first!</p>
+              ) : (
+                <select
+                  name="person_id"
+                  value={formData.person_id}
+                  onChange={handleInputChange}
+                >
+                  <option value="">Select a client</option>
+                  {persons.map((p) => (
+                    <option key={p.id} value={String(p.id)}>
+                      {p.name} ({p.email})
+                    </option>
+                  ))}
+                </select>
+              )}
+            </div>
           </div>
 
+          {/* Close date */}
           <div className="form-row">
             <div className="form-field">
               <label>Close Day</label>

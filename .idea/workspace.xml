@@ -5,11 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="48639d83-2eec-4ba8-8a7c-203d3d234227" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/frontend/src/components/EditPersonModal.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/JobPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/JobPage.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/PersonPage.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/PersonPage.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/PersonPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/PersonPage.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/app.db" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/app/api/jobs.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/api/jobs.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/app/schemas/job.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/schemas/job.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/AddDealModal.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/AddDealModal.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/EditDealModal.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/EditDealModal.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

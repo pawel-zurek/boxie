@@ -36,6 +36,8 @@ def update_job(
     if not db_job:
         raise HTTPException(status_code=404, detail="Job not found")
 
+    if job_in.person_id is not None:
+        job.person_id = job_in.person_id
 
     if "status" in job_in.dict(exclude_unset=True) and job_in.status != db_job.status:
         status_history.create_status_entry(db, job_id=db_job.id, new_status=job_in.status)

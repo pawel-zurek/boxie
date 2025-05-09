@@ -33,6 +33,7 @@ class JobUpdate(BaseModel):
     value: Optional[int] = None
     close_date: Optional[datetime] = None
     status: Optional[str] = None
+    person_id: Optional[int] = None
 
     class Config:
         orm_mode = True
