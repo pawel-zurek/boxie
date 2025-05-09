@@ -6,15 +6,15 @@ import Header from './Header';
 import SalesPipelineBoard from './SalesPipelineBoard';
 import { DragDropContext } from '@hello-pangea/dnd';
 import AddDealModal from './AddDealModal';
+import AddClientModal from './AddClientModal';
 
 const API_URL = import.meta.env.VITE_API_URL;
-
-// Define the stages (columns)
 const stages = ["Lead", "Backlog", "In Progress", "Waiting for Payment", "Closed"];
 
 function MainApp() {
   const [pipelineData, setPipelineData] = useState({ columns: [] });
   const [isAddDealModalOpen, setIsAddDealModalOpen] = useState(false);
+  const [isAddClientModalOpen, setIsAddClientModalOpen] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -136,24 +136,41 @@ function MainApp() {
     setIsAddDealModalOpen(!isAddDealModalOpen);
   };
 
+  const toggleAddClientModal = () => {
+    setIsAddClientModalOpen(!isAddClientModalOpen);
+  };
+
   const handleSaveNewDeal = () => {
     toggleAddDealModal();
   };
 
+  const handleSaveNewClient = () => {
+    toggleAddClientModal();
+  };
+
   return (
-    <div className="App">
-      <Header onAddDealClick={toggleAddDealModal} />
-      <DragDropContext onDragEnd={onDragEnd}>
-        <SalesPipelineBoard data={pipelineData} onDealClick={handleDealClick} />
-      </DragDropContext>
-      {isAddDealModalOpen && (
-        <AddDealModal
-          onClose={toggleAddDealModal}
-          onSave={handleSaveNewDeal}
-        />
-      )}
-    </div>
-  );
+  <div className="App">
+    <Header
+      onAddDealClick={toggleAddDealModal}
+      onAddClientClick={toggleAddClientModal}
+    />
+    <DragDropContext onDragEnd={onDragEnd}>
+      <SalesPipelineBoard data={pipelineData} onDealClick={handleDealClick} />
+    </DragDropContext>
+    {isAddDealModalOpen && (
+      <AddDealModal
+        onClose={toggleAddDealModal}
+        onSave={handleSaveNewDeal}
+      />
+    )}
+    {isAddClientModalOpen && (
+      <AddClientModal
+        onClose={toggleAddClientModal}
+        onSave={handleSaveNewClient}
+      />
+    )}
+  </div>
+);
 }
 
 export default MainApp;

@@ -3,9 +3,9 @@ import React from 'react';
 import AddDealButton from './AddDealButton';
 import SearchBar from './SearchBar';
 import { useNavigate } from 'react-router-dom';
-import './Header.css'; // Import a CSS file for styling
+import './Header.css';
 
-function Header({ onAddDealClick }) {
+function Header({ onAddDealClick, onAddClientClick }) {
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -17,8 +17,11 @@ function Header({ onAddDealClick }) {
   return (
     <header className="app-header">
       <div className="header-left">
-        <div className="logo">Your Jobs</div> {/* Logo */}
-        <AddDealButton onClick={onAddDealClick} /> {/* Add button after logo */}
+        <div className="logo">Your Jobs</div>
+        <AddDealButton onClick={onAddDealClick} />
+        <button className="add-client-button" onClick={onAddClientClick}>
+          Add Client
+        </button>
       </div>
 
       <div className="header-center">

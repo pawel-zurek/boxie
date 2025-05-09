@@ -50,6 +50,20 @@
   .add-deal-button:hover {
     background-color: #0056b3; /* Match logout button hover effect */
   }
+
+  .add-client-button {
+    background-color: #57B9FF; /* Match logout button background */
+    color: white; /* Match logout button text color */
+    border: none; /* Match logout button border */
+    padding: 0.5rem 1rem; /* Match logout button padding */
+    border-radius: 5px; /* Match logout button border radius */
+    cursor: pointer;
+    font-size: 1rem; /* Match logout button font size */
+  }
+
+  .add-deal-button:hover {
+    background-color: #0056b3; /* Match logout button hover effect */
+  }
   
   .logout-button {
     background-color: #dc3545; /* Reddish logout button */
