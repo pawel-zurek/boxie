@@ -13,6 +13,7 @@ function AddDealModal({ onClose }) {
     close_day: '1',
     close_month: '1',
     close_year: '2025',
+    person_id: '',  // 👈 added field
   });
 
   const handleInputChange = (e) => {
@@ -24,16 +25,13 @@ function AddDealModal({ onClose }) {
   };
 
   const handleSaveLead = async () => {
-    if (!formData.name) {
-      alert('Job Name is required.');
+    if (!formData.name || !formData.person_id) {
+      alert('Job Name and Person ID are required.');
       return;
     }
 
-    const closeDate = new Date(
-      parseInt(formData.close_year),
-      parseInt(formData.close_month) - 1,
-      parseInt(formData.close_day)
-    ).toISOString();
+    const closeDate = `${formData.close_year}-${String(formData.close_month).padStart(2, '0')}-${String(formData.close_day).padStart(2, '0')}T00:00:00`;
+
 
     const backendData = {
       name: formData.name,
@@ -42,8 +40,7 @@ function AddDealModal({ onClose }) {
       value: parseInt(formData.value) || 0,
       close_date: closeDate,
       status: formData.status || 'Lead',
-      person_id: 1,
-      owner_id: 1,
+      person_id: parseInt(formData.person_id),
     };
 
     try {
@@ -126,7 +123,7 @@ function AddDealModal({ onClose }) {
             </div>
           </div>
 
-          {/* Value and Status */}
+          {/* Value, Status and Person ID */}
           <div className="form-row">
             <div className="form-field">
               <label htmlFor="value">Value (€)</label>
@@ -155,6 +152,18 @@ function AddDealModal({ onClose }) {
                 <option value="Waiting for Payment">Waiting for Payment</option>
                 <option value="Closed">Closed</option>
               </select>
+            </div>
+
+            <div className="form-field">
+              <label htmlFor="person_id">Person ID</label>
+              <input
+                type="number"
+                id="person_id"
+                name="person_id"
+                placeholder="Enter person ID"
+                value={formData.person_id}
+                onChange={handleInputChange}
+              />
             </div>
           </div>
 
@@ -187,7 +196,6 @@ function AddDealModal({ onClose }) {
               </select>
             </div>
           </div>
-
         </div>
 
         <div className="modal-footer">

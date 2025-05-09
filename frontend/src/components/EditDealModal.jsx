@@ -24,11 +24,8 @@ function EditDealModal({ job, onClose, onSave }) {
   };
 
   const handleSaveChanges = async () => {
-    const closeDate = new Date(
-      parseInt(formData.close_year),
-      parseInt(formData.close_month) - 1,
-      parseInt(formData.close_day)
-    ).toISOString();
+      const closeDate = `${formData.close_year}-${String(formData.close_month).padStart(2, '0')}-${String(formData.close_day).padStart(2, '0')}T00:00:00`;
+
 
     const backendData = {
       name: formData.name,
