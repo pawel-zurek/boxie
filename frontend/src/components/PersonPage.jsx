@@ -2,6 +2,7 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import './PersonPage.css';
+import EditPersonModal from './EditPersonModal';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -10,6 +11,7 @@ function PersonPage() {
   const navigate = useNavigate();
   const [person, setPerson] = useState(null);
   const [jobs, setJobs] = useState([]);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchPersonAndJobs = async () => {
@@ -60,11 +62,24 @@ function PersonPage() {
   return (
     <div className="person-page-container">
       <header className="page-header">
-        <button className="back-to-dashboard-button" onClick={() => navigate(-1)}>
-          ← Back
-        </button>
-        <h1>{person.name}</h1>
-      </header>
+          <button className="back-to-dashboard-button" onClick={() => navigate(-1)}>
+            ← Back
+          </button>
+          <div className="header-with-button">
+            <h1>{person.name}</h1>
+            <button className="edit-button" onClick={() => setIsEditModalOpen(true)}>
+              Edit
+            </button>
+          </div>
+        </header>
+
+        {isEditModalOpen && (
+          <EditPersonModal
+            person={person}
+            onClose={() => setIsEditModalOpen(false)}
+            onSave={() => window.location.reload()}
+          />
+        )}
 
       <section className="person-info card">
         <h2>Contact Info</h2>

@@ -132,7 +132,7 @@ const handleDelete = async () => {
         <div className="header-left-button"> {/* Use a class for styling */}
             <button className="back-to-dashboard-button" onClick={() => navigate('/dashboard')}>
                 {/* Add an icon here if you like, e.g., <ArrowLeftIcon className="icon" /> */}
-                Back to Dashboard
+                ← Back to Dashboard
             </button>
         </div>
 
