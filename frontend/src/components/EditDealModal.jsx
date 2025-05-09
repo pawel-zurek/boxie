@@ -11,7 +11,7 @@ function EditDealModal({ job, onClose, onSave }) {
     value: job.value || '',
     status: job.status || '',
     close_day: new Date(job.close_date).getDate().toString(),
-    close_month: (new Date(job.close_date).getMonth() + 1).toString(),
+    close_month: new Date(job.close_date).getMonth().toString(),
     close_year: new Date(job.close_date).getFullYear().toString(),
   });
 

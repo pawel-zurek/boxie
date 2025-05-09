@@ -31,7 +31,7 @@ class JobUpdate(BaseModel):
     address: Optional[str] = None
     city: Optional[str] = None
     value: Optional[int] = None
-    close_date: Optional[str] = None
+    close_date: Optional[datetime] = None
     status: Optional[str] = None
 
     class Config:

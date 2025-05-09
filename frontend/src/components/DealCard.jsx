@@ -44,9 +44,7 @@ function DealCard({ deal, index, onDealClick }) {
           onClick={() => onDealClick(deal.id)}
         >
           <div className="deal-header">
-            <div className="deal-title-container">
-              <h4 className="deal-title">{deal.title}</h4>
-            </div>
+            <div className="deal-title">{deal.title}</div>
             <div className="deal-value">€{deal.raw?.value?.toLocaleString() ?? '0'}</div>
           </div>
 
