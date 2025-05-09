@@ -12,9 +12,15 @@ function JobPage() {
   const navigate = useNavigate();
   const [job, setJob] = useState(null);
   const [stagesTimeline, setStagesTimeline] = useState([]);
-  const [notes, setNotes] = useState("This is a note placeholder");
+  const [notes, setNotes] = useState([]);
+  const [activities, setActivities] = useState([]);
   const [person, setPerson] = useState(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [showNoteInput, setShowNoteInput] = useState(false);
+  const [newNoteText, setNewNoteText] = useState('');
+  const [showActivityInput, setShowActivityInput] = useState(false);
+  const [newActivityText, setNewActivityText] = useState('');
+
 
   useEffect(() => {
   const fetchJobAndStatusHistory = async () => {
@@ -77,9 +83,6 @@ function JobPage() {
   fetchJobAndStatusHistory();
 }, [jobId]);
 
-  if (!job) {
-    return <div className="loading-state">Loading...</div>;
-  }
 
   // Helper function to determine status pill class
   const getStatusClass = (status) => {
@@ -95,6 +98,43 @@ function JobPage() {
         return 'status-default';
     }
   };
+
+useEffect(() => {
+  if (!jobId) return;
+
+  const fetchNotesAndActivities = async () => {
+    const token = localStorage.getItem("token");
+
+    try {
+      // Fetch Notes
+      const notesResponse = await fetch(`${API_URL}/api/notes/`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (!notesResponse.ok) throw new Error("Failed to fetch notes");
+      const allNotes = await notesResponse.json();
+      const jobNotes = allNotes.filter(note => note.job_id === Number(jobId));
+      setNotes(jobNotes);
+
+      // Fetch Activities
+      const activitiesResponse = await fetch(`${API_URL}/api/activities/`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (!activitiesResponse.ok) throw new Error("Failed to fetch activities");
+      const allActivities = await activitiesResponse.json();
+      const jobActivities = allActivities.filter(a => a.job_id === Number(jobId));
+      setActivities(jobActivities);
+
+    } catch (err) {
+      console.error("Error fetching notes or activities:", err);
+    }
+  };
+
+  fetchNotesAndActivities();
+}, [jobId]);
 
 const handleDelete = async () => {
   const confirmed = window.confirm("Are you sure you want to delete this job?");
@@ -122,6 +162,125 @@ const handleDelete = async () => {
     alert("There was an error deleting the job.");
   }
 };
+
+const toggleActivityStatus = async (activityId, currentStatus) => {
+  const token = localStorage.getItem("token");
+  try {
+    const response = await fetch(`${API_URL}/api/activities/${activityId}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
+      body: JSON.stringify({ status: !currentStatus }),
+    });
+
+    if (!response.ok) throw new Error("Failed to update activity");
+
+    // Update local state after successful patch
+    setActivities(prev =>
+      prev.map(act =>
+        act.id === activityId ? { ...act, status: !currentStatus } : act
+      )
+    );
+  } catch (err) {
+    console.error("Error updating activity status:", err);
+  }
+};
+
+const handleAddNote = async () => {
+  if (!newNoteText.trim()) return;
+
+  const token = localStorage.getItem("token");
+  try {
+    const response = await fetch(`${API_URL}/api/notes/`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        text: newNoteText,
+        job_id: parseInt(jobId),
+      }),
+    });
+
+    if (!response.ok) throw new Error("Failed to add note");
+    setNewNoteText('');
+    setShowNoteInput(false);
+    // Refresh notes
+    const data = await response.json();
+    setNotes(prev => [...prev, data]);
+  } catch (err) {
+    console.error("Error adding note:", err);
+  }
+};
+
+const handleAddActivity = async () => {
+  if (!newActivityText.trim()) return;
+
+  const token = localStorage.getItem("token");
+  try {
+    const response = await fetch(`${API_URL}/api/activities/`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        desc: newActivityText,
+        job_id: parseInt(jobId),
+        status: false,
+      }),
+    });
+
+    if (!response.ok) throw new Error("Failed to add activity");
+    setNewActivityText('');
+    setShowActivityInput(false);
+    // Refresh activities
+    const data = await response.json();
+    setActivities(prev => [...prev, data]);
+  } catch (err) {
+    console.error("Error adding activity:", err);
+  }
+};
+
+const handleDeleteNote = async (noteId) => {
+  const token = localStorage.getItem("token");
+  try {
+    const response = await fetch(`${API_URL}/api/notes/${noteId}`, {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!response.ok) throw new Error("Failed to delete note");
+    setNotes(prev => prev.filter(n => n.id !== noteId));
+  } catch (err) {
+    console.error("Error deleting note:", err);
+  }
+};
+
+const handleDeleteActivity = async (activityId) => {
+  const token = localStorage.getItem("token");
+  try {
+    const response = await fetch(`${API_URL}/api/activities/${activityId}`, {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    if (!response.ok) throw new Error("Failed to delete activity");
+    setActivities(prev => prev.filter(a => a.id !== activityId));
+  } catch (err) {
+    console.error("Error deleting activity:", err);
+  }
+};
+
+  if (!job) {
+    return <div className="loading-state">Loading...</div>;
+  }
 
 
   return (
@@ -164,14 +323,70 @@ const handleDelete = async () => {
         </div>
         </div>
 
-        {/* Sections Container (Left and Right Columns) */}
         <div className="detail-sections-container">
-          {/* Left Column */}
           <div className="left-column">
+            <div className="add-buttons-row">
+              <button className="add-button" onClick={() => setShowNoteInput(prev => !prev)}>+ Add Note</button>
+              <button className="add-button" onClick={() => setShowActivityInput(prev => !prev)}>+ Add Activity</button>
+            </div>
+
             {/* Notes Section */}
             <section className="notes-section card">
               <h2>Notes</h2>
-              <p>{notes}</p> {/* Using placeholder notes */}
+              {showNoteInput && (
+                <div className="input-area">
+                  <input
+                    type="text"
+                    value={newNoteText}
+                    onChange={(e) => setNewNoteText(e.target.value)}
+                    placeholder="Enter note text"
+                  />
+                  <button onClick={handleAddNote}>Save</button>
+                </div>
+              )}
+              {notes.length === 0 ? (
+                <p>No notes available.</p>
+              ) : (
+                notes.map((note) => (
+                  <div key={note.id} className="note-box">
+                    <p>{note.text}</p>
+                    <button className="delete-button-small" onClick={() => handleDeleteNote(note.id)}>Delete</button>
+                  </div>
+                ))
+              )}
+            </section>
+
+            {/* Activities Section */}
+            <section className="activities-section card">
+              <h2>Activities</h2>
+              {showActivityInput && (
+                <div className="input-area">
+                  <input
+                    type="text"
+                    value={newActivityText}
+                    onChange={(e) => setNewActivityText(e.target.value)}
+                    placeholder="Enter activity description"
+                  />
+                  <button onClick={handleAddActivity}>Save</button>
+                </div>
+              )}
+              {activities.length === 0 ? (
+                <p>No activities available.</p>
+              ) : (
+                activities.map((activity) => (
+                  <div key={activity.id} className="activity-box">
+                    <div className="activity-item">
+                      <input
+                        type="checkbox"
+                        checked={activity.status}
+                        onChange={() => toggleActivityStatus(activity.id, activity.status)}
+                      />
+                      <span>{activity.desc}</span>
+                      <button className="delete-button-small" onClick={() => handleDeleteActivity(activity.id)}>Delete</button>
+                    </div>
+                  </div>
+                ))
+              )}
             </section>
           </div>
 

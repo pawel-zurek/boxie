@@ -27,12 +27,6 @@ body {
     z-index: 1000; /* Ensure header is above other content */
 }
 
-/* New style for the container of the back button in the header */
-.header-left-button {
-    /* You can add padding or margin here if needed */
-}
-
-
 /* Style for the Back to Dashboard Button in the header */
 .back-to-dashboard-button {
     background-color: transparent; /* No background color */
@@ -50,11 +44,6 @@ body {
     color: #0056b3; /* Darker blue on hover */
     background-color: #f8f9fa; /* Light background on hover */
 }
-
-
-/* Remove or adjust styles for the old header elements if they were specific */
-/* For example, if you had .header-left styles that are no longer needed */
-
 
 .header-right {
     display: flex;
@@ -265,6 +254,122 @@ body {
     margin-right: 0.5rem; /* Space between icon and text */
     /* Style your icons here (size, color) */
 }
+
+.note-box {
+  background-color: #f8f8f8;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #383d41;
+}
+
+/* Ensure text wraps nicely and fills available space */
+.note-box p {
+  margin: 0;
+  flex: 1;
+  word-break: break-word;
+}
+
+.activity-box {
+  background-color: #f4f9f4;
+  border: 1px solid #cce5cc;
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 10px;
+  color: #383d41;
+}
+
+.activity-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.activity-box input[type="checkbox"] {
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.input-area {
+  margin: 10px 0;
+  display: flex;
+  gap: 8px;
+}
+
+.add-buttons-row {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+  width: fit-content;
+}
+
+.add-button {
+  padding: 0.4rem 0.8rem;
+  border: 1px solid #007bff;
+  border-radius: 4px;
+  background-color: #ffffff;
+  color: #007bff;
+  cursor: pointer;
+  font-size: 0.9rem;
+  margin-right: 0.5rem;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.add-button:hover {
+  background-color: #f0f8ff;
+  border-color: #007bff;
+}
+
+/* Input box and save button styling */
+.input-area {
+  margin: 10px 0;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.input-area input[type="text"] {
+  padding: 0.4rem 0.6rem;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  background-color: #f5f5f5;
+  font-size: 0.9rem;
+  flex: 1;
+  color: black;
+}
+
+.input-area button {
+  padding: 0.4rem 0.8rem;
+  border: 1px solid #003366;
+  background-color: #ffffff;
+  color: #003366;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.input-area button:hover {
+  background-color: #f0f8ff;
+}
+
+/* Smaller delete icon for notes and activities */
+.delete-button-small {
+  background: none;
+  border: none;
+  color: #555;
+  cursor: pointer;
+  font-size: 7px;
+  margin-left: auto;
+}
+
+.delete-button-small:hover {
+  color: #000;
+}
+
 
 /* Stages Timeline Styling */
 .timeline-list {
