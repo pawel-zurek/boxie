@@ -96,6 +96,34 @@ function JobPage() {
     }
   };
 
+const handleDelete = async () => {
+  const confirmed = window.confirm("Are you sure you want to delete this job?");
+  if (!confirmed) return;
+
+  const token = localStorage.getItem("token");
+
+  try {
+    const response = await fetch(`${API_URL}/api/jobs/${jobId}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (response.ok) {
+      navigate("/dashboard");
+    } else {
+      const text = await response.text();
+      console.error("Delete failed:", response.status, text);
+      alert("There was an error deleting the job.");
+    }
+  } catch (error) {
+    console.error("Delete failed:", error);
+    alert("There was an error deleting the job.");
+  }
+};
+
+
   return (
     <div className="job-page-container">
       {/* Header */}
@@ -129,7 +157,10 @@ function JobPage() {
               </span>
             )}
           </div>
-          <button className="edit-button" onClick={() => setIsEditModalOpen(true)}>Edit</button>
+          <div className="deal-actions">
+              <button className="edit-button" onClick={() => setIsEditModalOpen(true)}>Edit</button>
+              <button className="delete-button" onClick={handleDelete}>Delete</button>
+          </div>
         </div>
         </div>
 
