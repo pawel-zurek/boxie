@@ -5,12 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="48639d83-2eec-4ba8-8a7c-203d3d234227" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app.db" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app/api/activities.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/api/activities.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app/api/notes.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/api/notes.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/JobPage.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/JobPage.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/JobPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/JobPage.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
