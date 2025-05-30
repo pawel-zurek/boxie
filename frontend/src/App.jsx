@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import Login from "./components/Login";
 import MainApp from "./components/MainApp";
 import JobPage from "./components/JobPage";
@@ -9,35 +9,72 @@ function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoadingAuth, setIsLoadingAuth] = useState(true);
 
-  useEffect(() => {
+useEffect(() => {
+  const checkToken = async () => {
     const token = localStorage.getItem("token");
-    setIsAuthenticated(!!token);
-    setIsLoadingAuth(false); // ✅ Auth check is done
-  }, []);
+
+    if (!token) {
+      setIsAuthenticated(false);
+      setIsLoadingAuth(false);
+      return;
+    }
+
+    try {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/auth`, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+
+      if (response.ok) {
+        setIsAuthenticated(true);
+      } else {
+        localStorage.removeItem("token"); // Remove invalid/expired token
+        setIsAuthenticated(false);
+      }
+    } catch (err) {
+      console.error("Error checking token:", err);
+      setIsAuthenticated(false);
+    }
+
+    setIsLoadingAuth(false);
+  };
+
+  checkToken();
+}, []);
+
 
   const handleLoginSuccess = () => {
     setIsAuthenticated(true);
   };
 
   if (isLoadingAuth) {
-    return <div className="loading-state">Checking login...</div>; // Optional loading message
-  }
-
-  if (!isAuthenticated) {
-    return <Login onLoginSuccess={handleLoginSuccess} />;
+    return <div className="loading-state">Checking login...</div>;
   }
 
   return (
-    <div className="App">
-      <BrowserRouter>
-        <Routes>
-          <Route path="/dashboard" element={<MainApp />} />
-          <Route path="/job/:jobId" element={<JobPage />} />
-          <Route path="/person/:personId" element={<PersonPage />} />
-          <Route path="*" element={<Navigate to="/dashboard" replace />} />
-        </Routes>
-      </BrowserRouter>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        {/* Login Route (Always accessible) */}
+        <Route path="/" element={
+          isAuthenticated ? <Navigate to="/dashboard" replace /> : <Login onLoginSuccess={handleLoginSuccess} />
+        } />
+
+        {/* Protected Routes */}
+        <Route path="/dashboard" element={
+          isAuthenticated ? <MainApp /> : <Navigate to="/" replace />
+        } />
+        <Route path="/job/:jobId" element={
+          isAuthenticated ? <JobPage /> : <Navigate to="/" replace />
+        } />
+        <Route path="/person/:personId" element={
+          isAuthenticated ? <PersonPage /> : <Navigate to="/" replace />
+        } />
+
+        {/* Catch-all fallback */}
+        <Route path="*" element={<Navigate to={isAuthenticated ? "/dashboard" : "/"} replace />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
