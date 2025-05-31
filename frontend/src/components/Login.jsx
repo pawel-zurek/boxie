@@ -132,8 +132,8 @@ function Login({ onLoginSuccess }) {
   return (
     <div className="login-container">
       <div className="login-header">
-        <h1>Boxi</h1>
-        <p>Manage your jobs, clients and tommorow's tasks</p>
+        <h1>Boxie</h1>
+        <p>Manage your jobs, clients and tomorrow's tasks</p>
       </div>
 
       <div className="login-card">
